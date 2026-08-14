@@ -26,6 +26,7 @@ FetchContent_MakeAvailable(glfw)
 add_executable(Engine
     src/main.cpp
     src/glad.c
+    src/Window.cpp
 )
 
 # Tell CMake to look in the 'include' folder for header files
