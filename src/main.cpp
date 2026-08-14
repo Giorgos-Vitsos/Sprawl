@@ -1,23 +1,26 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
 #include <iostream>
 
-// Callback function to adjust the viewport when the user resizes the window
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-    // Note: glViewport requires GLAD/GLEW to be initialized first to work properly.
-    // We will hook this up fully in the next step.
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
 }
 
-// Keep all input logic centralized
-void processInput(GLFWwindow *window) {
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+void processInput(GLFWwindow* window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    {
         glfwSetWindowShouldClose(window, true);
+    }
 }
 
-// FIX: Changed back to bool to make the if(!initializeLib()) check work correctly
-bool initializeLib(){
-    if (!glfwInit()) {
-        std::cerr << "Failed to initialize GLFW" << std::endl;
+bool initGLFW()
+{
+    if (!glfwInit())
+    {
+        std::cerr << "Failed to initialize GLFW\n";
         return false;
     }
 
@@ -25,55 +28,87 @@ bool initializeLib(){
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    return true; // FIX: Added missing semicolon
+    return true;
 }
 
-// FIX: Added the window pointer as a parameter so the function can see it
-void render(GLFWwindow* window){
-    while (!glfwWindowShouldClose(window)) {
-        // Handle input
+GLFWwindow* initWindow()
+{
+    GLFWwindow* window = glfwCreateWindow(
+        800,
+        600,
+        "Graphics Engine - Test",
+        NULL,
+        NULL
+    );
+
+    if (window == NULL)
+    {
+        std::cerr << "Failed to create GLFW window\n";
+        glfwTerminate();
+        return NULL;
+    }
+
+    glfwMakeContextCurrent(window);
+
+    glfwSetFramebufferSizeCallback(
+        window,
+        framebuffer_size_callback
+    );
+
+    return window;
+}
+
+void render(GLFWwindow* window)
+{
+    while (!glfwWindowShouldClose(window))
+    {
         processInput(window);
 
-        // [RENDERING COMMANDS WILL GO HERE]
-        // Example: glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        // Example: glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
 
-        // Swap the back buffer to the front and poll for events (mouse, keyboard)
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 }
 
-int main() {
-    // 1. Initialize GLFW
-    if (!initializeLib()) {
-        return -1; // If it failed, exit the program safely
-    }
+int main()
+{
 
-    // 2. Create the Window
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Graphics Engine - Test", NULL, NULL);
-    if (window == NULL) {
-        std::cerr << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-    // FIX: Restored the missing 'i' in 'if'
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cerr << "Failed to initialize GLAD" << std::endl;
-        glfwTerminate();
+    if (!initGLFW())
+    {
         return -1;
     }
 
-    glViewport(0, 0, 800, 600);
+    GLFWwindow* window = initWindow();
 
-    // 3. The Render Loop
-    // FIX: Passed the window into the render function
+    if (window == NULL)
+    {
+        return -1;
+    }
+
+    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
+    {
+        std::cerr << "Failed to initialize GLAD\n";
+
+        glfwDestroyWindow(window);
+        glfwTerminate();
+
+        return -1;
+    }
+
+    int width;
+    int height;
+
+    glfwGetFramebufferSize(window, &width, &height);
+    glViewport(0, 0, width, height);
+
+
     render(window);
 
-    // 4. Clean up resources
+
+    glfwDestroyWindow(window);
     glfwTerminate();
+
     return 0;
 }
