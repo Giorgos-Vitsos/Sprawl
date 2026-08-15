@@ -16,14 +16,41 @@ public:
      * @param size The total size of the data in bytes.
      */
     VertexBuffer(const void *data, unsigned int size);
+
     /**
      * @brief Destroys the vertex buffer.
      */
     ~VertexBuffer();
+
+    /**
+     * @brief Copying is disabled because the OpenGL resource
+     * has unique ownership.
+     */
+    VertexBuffer(const VertexBuffer&) = delete;
+
+    /**
+     * @brief Copying is disabled because the OpenGL resource
+     * has unique ownership.
+     */
+    VertexBuffer& operator=(const VertexBuffer&) = delete;
+
+    /**
+     * @brief Transfers ownership of the OpenGL vertex buffer.
+     *
+     * The source object is left with no owned OpenGL resource.
+     */
+    VertexBuffer(VertexBuffer&& other) noexcept;
+
+    /**
+     * @brief Transfers ownership of the OpenGL vertex buffer.
+     */
+    VertexBuffer& operator=(VertexBuffer&& other) noexcept;
+
     /**
      * @brief Binds the vertex buffer to the active OpenGL context.
      */
     void Bind() const;
+    
     /**
      * @brief Unbinds the active vertex buffer.
      */

@@ -9,6 +9,20 @@ VertexArray::~VertexArray(){
     glDeleteVertexArrays(1,&m_ID);
 }
 
+VertexArray::VertexArray(VertexArray&& other) noexcept : m_ID(other.m_ID) 
+{
+    other.m_ID = 0;
+}
+
+VertexArray& VertexArray::operator=(VertexArray&& other) noexcept {
+    if (this != &other) { 
+        glDeleteBuffers(1, &m_ID); 
+        m_ID = other.m_ID;         
+        other.m_ID = 0;           
+    }
+    return *this;
+}
+
 void VertexArray::Bind() const{
     glBindVertexArray(m_ID);
 }

@@ -10,6 +10,21 @@ VertexBuffer::VertexBuffer(const void*data, unsigned int size){
 VertexBuffer::~VertexBuffer(){
     glDeleteBuffers(1,&m_ID);
 }
+
+VertexBuffer::VertexBuffer(VertexBuffer&& other) noexcept : m_ID(other.m_ID) 
+{
+    other.m_ID = 0;
+}
+
+VertexBuffer& VertexBuffer::operator=(VertexBuffer&& other) noexcept {
+    if (this != &other) { 
+        glDeleteBuffers(1, &m_ID); 
+        m_ID = other.m_ID;         
+        other.m_ID = 0;           
+    }
+    return *this;
+}
+
 void VertexBuffer::Bind() const{
     glBindBuffer(GL_ARRAY_BUFFER,m_ID);
 }

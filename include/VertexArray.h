@@ -18,6 +18,31 @@ public:
      * @brief Destroys the VAO.
      */
     ~VertexArray();
+
+    /**
+     * @brief Copying is disabled because the OpenGL resource
+     * has unique ownership.
+     */
+    VertexArray(const VertexArray&) = delete;
+
+    /**
+     * @brief Copying is disabled because the OpenGL resource
+     * has unique ownership.
+     */
+    VertexArray& operator=(const VertexArray&) = delete;
+
+    /**
+     * @brief Transfers ownership of the OpenGL vertex array.
+     *
+     * The source object is left with no owned OpenGL resource.
+     */
+
+    VertexArray(VertexArray&& other) noexcept;
+    /**
+     * @brief Transfers ownership of the OpenGL vertex array.
+     */
+    VertexArray& operator=(VertexArray&& other) noexcept;
+
     /**
      * @brief Binds the VAO to the active OpenGL context.
      */
@@ -26,6 +51,7 @@ public:
      * @brief Unbinds the active VAO.
      */
     void Unbind() const;
+    
     /**
      * @brief Wires a Vertex Buffer to this Vertex Array using a specific layout.
      *

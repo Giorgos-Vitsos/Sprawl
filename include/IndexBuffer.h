@@ -22,6 +22,30 @@ public:
     ~IndexBuffer();
 
     /**
+     * @brief Copying is disabled because the OpenGL resource
+     * has unique ownership.
+     */
+    IndexBuffer(const IndexBuffer&) = delete;
+
+    /**
+     * @brief Copying is disabled because the OpenGL resource
+     * has unique ownership.
+     */
+    IndexBuffer& operator=(const IndexBuffer&) = delete;
+
+    /**
+     * @brief Transfers ownership of the OpenGL index buffer.
+     *
+     * The source object is left with no owned OpenGL resource.
+     */
+    IndexBuffer(IndexBuffer&& other) noexcept;
+
+    /**
+     * @brief Transfers ownership of the OpenGL index buffer.
+     */
+    IndexBuffer& operator=(IndexBuffer&& other) noexcept;
+
+    /**
      * @brief Binds the index buffer to the active OpenGL context.
      */
     void Bind() const;
