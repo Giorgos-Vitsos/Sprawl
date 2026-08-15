@@ -8,7 +8,7 @@
 
 int main() {
     try {
-        Window window(800, 600, "Graphics Engine - First Triangle");
+        Window window(800, 600, "Graphics Engine - Giorgos Vitsos");
 
         float vertices[] = {
              0.5f,  0.5f, 0.0f, //0
