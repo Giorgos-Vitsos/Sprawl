@@ -58,7 +58,7 @@ unsigned int Shader::CreateShaderProgram(const std::string &vertexCode,const std
 
     int result;
     glGetProgramiv(program, GL_LINK_STATUS, &result);
-    if (result == GL_FALSE) {
+    if (result == GL_FALSE) {//if it failed we build report msg
         int length;
         glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
         std::vector<char> message(length);

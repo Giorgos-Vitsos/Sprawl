@@ -20,16 +20,16 @@ void VertexArray::Unbind() const{
 void VertexArray::AddBuffer(const VertexBuffer &vbo,const VertexBufferLayout &layout){
     Bind();
     vbo.Bind();
-    const auto &elements=layout.GetElements();
+    const auto &attributes=layout.GetAttributes();
     unsigned int offset=0;
 
-    for(unsigned int i=0;i<elements.size();i++){
-        const auto &element=elements[i];
+    for(unsigned int i=0;i<attributes.size();i++){//for each attribute in VBO
+        const auto &attribute=attributes[i];
         glEnableVertexAttribArray(i);
-        glVertexAttribPointer(i, element.count, element.type,element.normalized, layout.GetStride(), (const void*)(size_t)offset);
+        glVertexAttribPointer(i, attribute.count, attribute.type,attribute.normalized, layout.GetStride(), (const void*)(size_t)offset);
         
-        unsigned int sizeOfType;
-        switch (element.type)
+        unsigned int sizeOfType;//we find how much each type is in bytes
+        switch (attribute.type)
         {
         case GL_FLOAT:
             sizeOfType=4;
@@ -41,6 +41,6 @@ void VertexArray::AddBuffer(const VertexBuffer &vbo,const VertexBufferLayout &la
             sizeOfType=0;
             break;
         }
-        offset += element.count * sizeOfType;
+        offset += attribute.count * sizeOfType;
     }
 }
