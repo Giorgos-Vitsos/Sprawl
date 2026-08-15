@@ -2,8 +2,12 @@
 #include <glad/glad.h>
 #include <iostream>
 #include <vector>
+#include <fstream>
+#include <sstream>
 
-Shader::Shader(const std::string &vertexCode,const std::string &fragmentCode){
+Shader::Shader(const std::string &vertexPath,const std::string &fragmentPath){
+    std::string vertexCode=ReadFile(vertexPath);
+    std::string fragmentCode=ReadFile(fragmentPath);
     m_ID=CreateShaderProgram(vertexCode,fragmentCode);
 }
 
@@ -71,4 +75,14 @@ unsigned int Shader::CreateShaderProgram(const std::string &vertexCode,const std
     glDeleteShader(fs);
 
     return program;
+}
+
+std::string Shader::ReadFile(const std::string &filePath){
+    std::ifstream stream(filePath);
+    if(!stream.is_open()){
+        throw std::runtime_error("Failed to open Shader file: "+ filePath);
+    }
+    std::stringstream buffer;
+    buffer<<stream.rdbuf();
+    return buffer.str();
 }
