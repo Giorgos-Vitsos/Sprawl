@@ -25,10 +25,13 @@ add_executable(Engine
     src/Renderer/VertexBuffer.cpp
     src/Renderer/VertexArray.cpp
     src/glad.c
+    src/Renderer/Shader.cpp
 )
 
 # Tell CMake to look in the 'include' folder for header files
-target_include_directories(Engine PRIVATE include)
+target_include_directories(Engine PRIVATE
+    ${CMAKE_SOURCE_DIR}/include
+)
 
 # Link your executable to GLFW and OpenGL
 target_link_libraries(Engine PRIVATE glfw OpenGL::GL)
