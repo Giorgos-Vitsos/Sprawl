@@ -26,6 +26,7 @@ add_executable(Engine
     src/Renderer/VertexArray.cpp
     src/glad.c
     src/Renderer/Shader.cpp
+    src/Renderer/IndexBuffer.cpp
 )
 
 # Tell CMake to look in the 'include' folder for header files
