@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <glm/glm.hpp>
 
 /**
  * @brief Manages an OpenGL shader program.
@@ -36,6 +37,7 @@ public:
      * @brief Unbinds the current shader program.
      */
     void Unbind() const;
+    void SetUniformMat4f(const std::string &name,const glm::mat4 &matrix);
 
 private:
     unsigned int m_ID;
@@ -62,4 +64,7 @@ private:
      * @return A string containing the entire file's contents.
      */
     std::string ReadFile(const std::string &filePath);
+
+    int GetUniformLoc(const std::string &name);
+    
 };

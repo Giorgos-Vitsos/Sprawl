@@ -1,5 +1,6 @@
 #include "Shader.h"
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -85,4 +86,17 @@ std::string Shader::ReadFile(const std::string &filePath){
     std::stringstream buffer;
     buffer<<stream.rdbuf();
     return buffer.str();
+}
+
+int Shader::GetUniformLoc(const std::string &name){
+    return glGetUniformLocation(m_ID,name.c_str());
+}
+
+void Shader::SetUniformMat4f(const std::string &name,const glm::mat4 &matrix){
+    Bind();
+    int location=GetUniformLoc(name);
+    if(location==-1){
+        std::cout<<"Warning: uniform "<<name<<"couldnt be found"<<std::endl;
+    }
+    glUniformMatrix4fv(location,1,GL_FALSE,glm::value_ptr(matrix));
 }
