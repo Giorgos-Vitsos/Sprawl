@@ -89,7 +89,13 @@ std::string Shader::ReadFile(const std::string &filePath){
 }
 
 int Shader::GetUniformLoc(const std::string &name){
-    return glGetUniformLocation(m_ID,name.c_str());
+    auto locationInMap=m_UniformLocMap.find(name);
+    if(locationInMap!=m_UniformLocMap.end()){
+        return locationInMap->second;
+    };
+    int location=glGetUniformLocation(m_ID, name.c_str());
+    m_UniformLocMap[name]=location;
+    return location;
 }
 
 void Shader::SetUniformMat4f(const std::string &name,const glm::mat4 &matrix){

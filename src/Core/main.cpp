@@ -5,6 +5,8 @@
 #include "IndexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "Mesh.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
 int main() {
@@ -29,6 +31,7 @@ int main() {
         Mesh mesh(vertices,indices,layout);
 
         Shader shader("assets/shaders/Basic.vert", "assets/shaders/Basic.frag");
+        glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
 
         while (!window.ShouldClose()) {
             window.ProcessInput();
@@ -36,7 +39,7 @@ int main() {
             glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            shader.Bind();
+            shader.SetUniformMat4f("u_MVP",proj);
             mesh.Bind();
             
             glDrawElements(GL_TRIANGLES, mesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr);

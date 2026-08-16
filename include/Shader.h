@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <glm/glm.hpp>
-
+#include <unordered_map>
 /**
  * @brief Manages an OpenGL shader program.
  *
@@ -66,5 +66,6 @@ private:
     std::string ReadFile(const std::string &filePath);
 
     int GetUniformLoc(const std::string &name);
-    
+
+    std::unordered_map<std::string,int> m_UniformLocMap;
 };
