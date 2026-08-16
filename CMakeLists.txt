@@ -33,6 +33,7 @@ add_executable(Engine
 # Tell CMake to look in the 'include' folder for header files
 target_include_directories(Engine PRIVATE
     ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/vendors
 )
 
 # Link your executable to GLFW and OpenGL
