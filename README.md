@@ -1,7 +1,7 @@
 # Sprawl
 
 Sprawl is a 3D graphics engine and procedural generation project built from scratch in C++ and OpenGL.
-I'm building everything from the ground up — the renderer, scene system, asset pipeline, editor, particle simulation, and eventually a procedural city generator.
+I'm building everything from the ground up: the renderer, scene system, asset pipeline, editor, particle simulation, and eventually a procedural city generator.
 The goal is to understand how these systems work by actually building them, rather than relying on an existing engine.
 
 ## Roadmap
