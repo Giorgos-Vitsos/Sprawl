@@ -29,6 +29,7 @@ add_executable(Engine
     src/Renderer/Shader.cpp
     src/Renderer/IndexBuffer.cpp
     src/Renderer/Mesh.cpp
+    src/Renderer/PrimitiveCreator.cpp
 )
 
 # Tell CMake to look in the 'include' folder for header files
