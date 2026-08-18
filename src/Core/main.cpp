@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#include "OrthographicCamera.h"
 
 int main() {
     try {
@@ -31,15 +32,15 @@ int main() {
         Mesh mesh(vertices,indices,layout);
 
         Shader shader("assets/shaders/Basic.vert", "assets/shaders/Basic.frag");
-        glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
+
+        OrthographicCamera camera(-2.0f, 2.0f, -1.5f, 1.5f);
         glm::mat4 model=glm::translate(glm::mat4(1.0f),glm::vec3(0.5,0,0));
-        glm::mat4 view=glm::translate(glm::mat4(1.0f),glm::vec3(-0.5,0,0));
 
-        glm::mat4 mvp=proj*view*model;
-
-
+        camera.SetPos(glm::vec3(0.5f,0,0));
+        
         while (!window.ShouldClose()) {
             window.ProcessInput();
+            glm::mat4 mvp=camera.GetViewProjMatrix()*model;
 
             glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);

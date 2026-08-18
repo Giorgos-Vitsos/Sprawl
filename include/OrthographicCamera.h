@@ -7,7 +7,7 @@ class OrthographicCamera{
         const glm::mat4 &GetProjMatrix() const;
         const glm::mat4 &GetViewMatrix() const;
         const glm::mat4 &GetViewProjMatrix() const;
-        void SetPos(const glm::vec3 pos);
+        void SetPos(const glm::vec3& pos);
         void SetRot(float rot);
     private:
         void RecalcViewMatrix();

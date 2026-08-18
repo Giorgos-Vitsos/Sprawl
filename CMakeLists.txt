@@ -22,6 +22,7 @@ FetchContent_MakeAvailable(glfw)
 add_executable(Engine
     src/Core/main.cpp
     src/Core/Window.cpp
+    src/Renderer/OrthographicCamera.cpp
     src/Renderer/VertexBuffer.cpp
     src/Renderer/VertexArray.cpp
     src/glad.c
