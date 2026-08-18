@@ -1,8 +1,8 @@
 #include "OrthographicCamera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-OrthographicCamera::OrthographicCamera(float left,float right,float botom,float top):m_ViewMatrix(1.0f),m_Pos(0,0,0),m_Rot(0){
-    m_ProjMatrix=glm::ortho(left, right, botom, top, -1.0f, 1.0f);
+OrthographicCamera::OrthographicCamera(float left,float right,float botom,float top,float nearClip,float farClip):m_ViewMatrix(1.0f),m_Pos(0,0,0),m_Rot(0){
+    m_ProjMatrix=glm::ortho(left, right, botom, top, nearClip,farClip);
     m_ViewProjMatrix=m_ProjMatrix*m_ViewMatrix;
 }
 

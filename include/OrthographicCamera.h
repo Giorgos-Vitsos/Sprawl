@@ -3,7 +3,7 @@
 
 class OrthographicCamera{
     public:
-        OrthographicCamera(float left,float right,float botom,float top);
+        OrthographicCamera(float left,float right,float botom,float top,float nearClip=-1.0f,float farClip=1.0f);
         const glm::mat4 &GetProjMatrix() const;
         const glm::mat4 &GetViewMatrix() const;
         const glm::mat4 &GetViewProjMatrix() const;
