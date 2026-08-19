@@ -4,6 +4,7 @@ Mesh::Mesh(const std::vector<float> &vertices, const std::vector<unsigned int> &
 {
     m_VAO.AddBuffer(m_VBO, layout);
     m_IBO.Bind();
+    Unbind();
 }
 
 void Mesh::Bind() const

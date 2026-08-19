@@ -16,7 +16,7 @@ VertexArray::VertexArray(VertexArray&& other) noexcept : m_ID(other.m_ID)
 
 VertexArray& VertexArray::operator=(VertexArray&& other) noexcept {
     if (this != &other) { 
-        glDeleteBuffers(1, &m_ID); 
+        glDeleteVertexArrays(1, &m_ID); 
         m_ID = other.m_ID;         
         other.m_ID = 0;           
     }
