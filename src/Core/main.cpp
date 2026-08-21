@@ -11,6 +11,7 @@
 #include "OrthographicCamera.h"
 #include "PrimitiveCreator.h"
 #include "Transform.h"
+#include "PerspectiveCamera.h"
 
 int main() {
     try {
@@ -24,8 +25,8 @@ int main() {
 
         Shader shader("assets/shaders/Basic.vert", "assets/shaders/Basic.frag");
 
-        OrthographicCamera camera(-2.0f, 2.0f, -1.5f, 1.5f,-100.0f,100.0f);
-
+        PerspectiveCamera camera(45.0f,800.0f/600.0f,0.1f,100.0f);
+        camera.SetPos(glm::vec3(0,0,3));
         
         float angle=0.0f;
         float pos=0.0f;

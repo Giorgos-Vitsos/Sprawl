@@ -3,7 +3,7 @@
 
 OrthographicCamera::OrthographicCamera(float left,float right,float botom,float top,float nearClip,float farClip):m_ViewMatrix(1.0f),m_Pos(0,0,0),m_Rot(0){
     m_ProjMatrix=glm::ortho(left, right, botom, top, nearClip,farClip);
-    m_ViewProjMatrix=m_ProjMatrix*m_ViewMatrix;
+    RecalcViewMatrix();
 }
 
 const glm::mat4 & OrthographicCamera::GetViewMatrix() const {return m_ViewMatrix;};
