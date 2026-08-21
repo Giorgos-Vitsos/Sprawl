@@ -31,7 +31,6 @@ int main() {
         float angle=0.0f;
         float pos=0.0f;
         glEnable(GL_DEPTH_TEST);
-        std::cout << "Triangle Indices: " << triangle.GetIndexCount() << std::endl;
         while (!window.ShouldClose()) {
             window.ProcessInput();
             glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
