@@ -6,8 +6,6 @@ OrthographicCamera::OrthographicCamera(float left,float right,float botom,float 
     RecalcViewMatrix();
 }
 
-const glm::mat4 & OrthographicCamera::GetViewMatrix() const {return m_ViewMatrix;};
-const glm::mat4 &OrthographicCamera::GetProjMatrix() const{ return m_ProjMatrix;};
 const glm::mat4 &OrthographicCamera::GetViewProjMatrix() const{ return m_ViewProjMatrix;};
 
 void OrthographicCamera::SetPos(const glm::vec3& pos){ 

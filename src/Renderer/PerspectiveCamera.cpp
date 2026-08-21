@@ -1,21 +1,40 @@
 #include "PerspectiveCamera.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <algorithm>
 
-PerspectiveCamera::PerspectiveCamera(float fov, float aspectRatio, float nearClip, float farClip):m_ViewMatrix(1.0f),m_Pos(0,0,0){
+PerspectiveCamera::PerspectiveCamera(float fov, float aspectRatio, float nearClip, float farClip):m_ViewMatrix(1.0f),m_Pos(0,0,0),m_Pitch(0),m_Yaw(0),m_Distance(3){
     m_ProjMatrix=glm::perspective(glm::radians(fov),aspectRatio,nearClip,farClip);
     RecalcViewMatrix();
 }
 
 void PerspectiveCamera::RecalcViewMatrix(){
 
-    glm::mat4 transform=glm::translate(glm::mat4(1.0f),m_Pos);
-    m_ViewMatrix=glm::inverse(transform);
+    float x=m_FocalPoint.x+m_Distance*cos(m_Pitch)*sin(m_Yaw);
+    float y=m_FocalPoint.y+m_Distance*sin(m_Pitch);
+    float z=m_FocalPoint.z+m_Distance*cos(m_Pitch)*cos(m_Yaw);
+
+    m_Pos=glm::vec3(x,y,z);
+    m_ViewMatrix=glm::lookAt(m_Pos,m_FocalPoint,glm::vec3(0, 1, 0));
     m_ViewProjMatrix=m_ProjMatrix*m_ViewMatrix;
+
 }
 
-void PerspectiveCamera::SetPos(const glm::vec3& pos){
-    m_Pos=pos;
+void PerspectiveCamera::SetFocalPoint(const glm::vec3& focalPoint){
+    m_FocalPoint=focalPoint;
+    RecalcViewMatrix();
+};
+
+void PerspectiveCamera::SetDis(float dis){
+    m_Distance=dis;
+    RecalcViewMatrix();
+};
+
+void PerspectiveCamera::SetPitchYaw(float pitch,float yaw){
+    m_Pitch=std::clamp(pitch,glm::radians(-89.9f),glm::radians(89.9f));
+    m_Yaw=yaw;
     RecalcViewMatrix();
 };
 
 const glm::mat4 &PerspectiveCamera::GetViewProjMatrix() const{ return m_ViewProjMatrix;};
+
