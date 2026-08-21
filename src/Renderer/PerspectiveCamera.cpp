@@ -3,7 +3,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <algorithm>
 
-PerspectiveCamera::PerspectiveCamera(float fov, float aspectRatio, float nearClip, float farClip):m_ViewMatrix(1.0f),m_Pos(0,0,0),m_Pitch(0),m_Yaw(0),m_Distance(3){
+PerspectiveCamera::PerspectiveCamera(float fov, float aspectRatio, float nearClip, float farClip):m_ViewMatrix(1.0f),m_Pos(0,0,0),m_Pitch(0),m_Yaw(0),m_Distance(3.0f),m_FocalPoint(0){
     m_ProjMatrix=glm::perspective(glm::radians(fov),aspectRatio,nearClip,farClip);
     RecalcViewMatrix();
 }
