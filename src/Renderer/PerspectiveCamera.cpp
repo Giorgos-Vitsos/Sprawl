@@ -15,9 +15,8 @@ void PerspectiveCamera::RecalcViewMatrix(){
     float z=m_FocalPoint.z+m_Distance*cos(m_Pitch)*cos(m_Yaw);
 
     m_Pos=glm::vec3(x,y,z);
-    m_ViewMatrix=glm::lookAt(m_Pos,m_FocalPoint,glm::vec3(0, 1, 0));
+    m_ViewMatrix=glm::lookAt(glm::vec3(m_Pos), glm::vec3(m_FocalPoint),WORLD_UP);
     m_ViewProjMatrix=m_ProjMatrix*m_ViewMatrix;
-
 }
 
 void PerspectiveCamera::SetFocalPoint(const glm::vec3& focalPoint){
@@ -38,3 +37,5 @@ void PerspectiveCamera::SetPitchYaw(float pitch,float yaw){
 
 const glm::mat4 &PerspectiveCamera::GetViewProjMatrix() const{ return m_ViewProjMatrix;};
 
+const glm::vec2 PerspectiveCamera::GetPichYaw() const {return glm::vec2(m_Pitch,m_Yaw);}
+    

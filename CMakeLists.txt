@@ -32,6 +32,8 @@ add_executable(Engine
     src/Renderer/PrimitiveCreator.cpp
     src/Renderer/Transform.cpp
     src/Renderer/PerspectiveCamera.cpp
+    src/Core/InputController.cpp
+    src/Renderer/CamController.cpp
 )
 
 # Tell CMake to look in the 'include' folder for header files

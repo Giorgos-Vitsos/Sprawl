@@ -1,6 +1,8 @@
 #pragma once
 #include <glm/glm.hpp>
 
+#define WORLD_UP glm::vec3(0,1,0)
+
 class PerspectiveCamera{
     public:
         PerspectiveCamera(float fov, float aspectRatio, float nearClip, float farClip);
@@ -8,6 +10,9 @@ class PerspectiveCamera{
         void SetDis(float dis);
         void SetFocalPoint(const glm::vec3 &focalPoint);
         void SetPitchYaw(float pitch,float yaw);
+        const glm::vec2 GetPichYaw() const;
+        const glm::vec3 GetPos() const {return m_Pos;};
+        const glm::vec3 GetFocalPoint() const{ return m_FocalPoint;};
     private:
         void RecalcViewMatrix();
         glm::mat4 m_ProjMatrix;

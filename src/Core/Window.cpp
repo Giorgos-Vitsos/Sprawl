@@ -1,6 +1,7 @@
 #include "Window.h"
 #include <iostream>
 #include <stdexcept>
+#include "InputController.h"
 
 Window::Window(int width,int height,const std::string& title):m_Width(width),m_Height(height),m_Title(title),m_Window(nullptr){
     
@@ -33,6 +34,7 @@ Window::Window(int width,int height,const std::string& title):m_Width(width),m_H
 
     glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
     glViewport(0, 0, m_Width, m_Height);
+    InputController::Init(GetWindow());
 }
 
 Window::~Window(){
@@ -56,7 +58,7 @@ void Window::SwapBuffersAndPoll(){
 
 void Window::ProcessInput(){
 
-    if (glfwGetKey(m_Window,GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    if (InputController::IsKeyPressed(GLFW_KEY_ESCAPE))
     {
         glfwSetWindowShouldClose(m_Window, true);
     }

@@ -63,6 +63,8 @@ public:
      */
     int GetHeight() const { return m_Height; }
 
+    GLFWwindow *GetWindow(){ return m_Window;}
+
 private:
     /**
      * @brief GLFW callback invoked when the framebuffer is resized.
