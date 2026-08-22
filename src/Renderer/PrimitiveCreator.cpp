@@ -1,11 +1,11 @@
 #include "PrimitiveCreator.h"
 
-Mesh PrimitiveCreator::CreateSquare(){
+Mesh PrimitiveCreator::CreatePlane(){
     std::vector<float> vertices = {
-             0.5f,  0.5f, 0.0f, //0
-             0.5f, -0.5f, 0.0f, //1
-            -0.5f, -0.5f, 0.0f, //2
-            -0.5f,  0.5f, 0.0f  //3
+             -0.5f,  0.0f, 0.5f, //0
+             0.5f, 0.0f, 0.5f, //1
+            0.5f, 0.0f, -0.5f, //2
+            -0.5f,  0.0f, -0.5f  //3
         };
 
     std::vector<unsigned int> indices = {
@@ -23,7 +23,7 @@ Mesh PrimitiveCreator::CreateTriangle(){
     std::vector<float> vertices = {
             -0.5f,  0.0f, 0.0f, //bottom L
             0.5f, 0.0f, 0.0f, //bottom R
-            0.0f, 0.5f, 0.0f, //top
+            0.0f, 0.5f, 0.0f //top
         };
 
     std::vector<unsigned int> indices = {
@@ -96,4 +96,75 @@ Mesh PrimitiveCreator::CreateCube(){
     layout.Push<float>(3);
 
     return Mesh(vertices, indices, layout);
+};
+
+Mesh PrimitiveCreator::CreatePyramid(){
+    std::vector<float> vertices = {
+            //bottom
+            -0.5f,  0.0f, 0.5f, //0
+            0.5f, 0.0f, 0.5f, //1
+            0.5f, 0.0f, -0.5f, //2
+            -0.5f,  0.0f, -0.5f,  //3
+            //top
+            0.0f,1.0f,0.0f //4
+        };
+
+    std::vector<unsigned int> indices = {
+            0, 3, 1, 
+            1, 3, 2,
+            0,1,4,
+            1,2,4,
+            2,3,4,
+            0,4,3
+        };
+    
+    VertexBufferLayout layout;
+        layout.Push<float>(3);
+    
+    return Mesh(vertices,indices,layout);
+};
+
+Mesh PrimitiveCreator::CreatePrism(){
+    std::vector<float> vertices = {
+        //front triangle
+            -0.5f,  0.0f, 0.5f, //bottom L
+            0.5f, 0.0f, 0.5f, //bottom R
+            0.0f, 1.0f, 0.5f, //top
+        //back triangle
+            -0.5f,  0.0f, -0.5f, //bottom L
+            0.5f, 0.0f, -0.5f, //bottom R
+            0.0f, 1.0f, -0.5f, //top
+        };
+
+    std::vector<unsigned int> indices = {
+            0, 1, 2,
+            3,5,4,
+            0,2,3,
+            3,2,5,
+            1,5,2,
+            1,4,5,
+            0, 3, 1,
+            1, 3, 4
+        };
+    
+    VertexBufferLayout layout;
+        layout.Push<float>(3);
+    
+    return Mesh(vertices,indices,layout);
+};
+
+Mesh PrimitiveCreator::CreateCircle(){
+    
+};
+
+Mesh PrimitiveCreator::CreateSphere(){
+ 
+};
+
+Mesh PrimitiveCreator::CreateCone(){
+
+};
+
+Mesh PrimitiveCreator::CreateCylinder(){
+
 };
