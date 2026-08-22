@@ -192,12 +192,59 @@ Mesh PrimitiveCreator::CreateCircle(int segments,float radius){
 Mesh PrimitiveCreator::CreateSphere(){
  
 };
+*/
+Mesh PrimitiveCreator::CreateCone(int segments,float radius){
+    std::vector<float> vertices;
+    std::vector<unsigned int> indices;
 
-Mesh PrimitiveCreator::CreateCone(){
+    //center
+    vertices.push_back(0);
+    vertices.push_back(0);
+    vertices.push_back(0);
 
+
+    float angle=glm::pi<float>()*2.0f/segments;
+    for(int i=0; i<segments; i++){
+        float x=radius*std::sin(angle*i);
+        float y=-radius*std::cos(angle*i);
+        vertices.push_back(x);
+        vertices.push_back(0);
+        vertices.push_back(y);
+    }
+
+    //top
+    vertices.push_back(0);
+    vertices.push_back(1);
+    vertices.push_back(0);
+
+    //bottom
+    for(int i=0; i<segments; i++){
+        unsigned int current=i+1;
+        unsigned int next=((i+1)%segments)+1;
+
+        indices.push_back(0);
+        indices.push_back(current);
+        indices.push_back(next);
+    }
+
+    //sides
+    for(int i=0; i<segments; i++){
+        unsigned int current=i+1;
+        unsigned int next=((i+1)%segments)+1;
+
+        indices.push_back(current);
+        indices.push_back(segments+1);
+        indices.push_back(next);//top
+    }
+
+    VertexBufferLayout layout;
+    layout.Push<float>(3);
+
+    return Mesh(vertices,indices,layout);
 };
 
-Mesh PrimitiveCreator::CreateCylinder(){
+/*
+Mesh PrimitiveCreator::CreateCylinder(int segments,float radius){
 
 };
 
