@@ -1,4 +1,7 @@
 #include "PrimitiveCreator.h"
+#include <cmath>
+#include <glm/gtc/constants.hpp>
+#include <glm/glm.hpp>
 
 Mesh PrimitiveCreator::CreatePlane(){
     std::vector<float> vertices = {
@@ -14,7 +17,7 @@ Mesh PrimitiveCreator::CreatePlane(){
         };
     
     VertexBufferLayout layout;
-        layout.Push<float>(3);
+    layout.Push<float>(3);
     
     return Mesh(vertices,indices,layout);
 };
@@ -31,7 +34,7 @@ Mesh PrimitiveCreator::CreateTriangle(){
         };
     
     VertexBufferLayout layout;
-        layout.Push<float>(3);
+    layout.Push<float>(3);
     
     return Mesh(vertices,indices,layout);
 };
@@ -119,7 +122,7 @@ Mesh PrimitiveCreator::CreatePyramid(){
         };
     
     VertexBufferLayout layout;
-        layout.Push<float>(3);
+    layout.Push<float>(3);
     
     return Mesh(vertices,indices,layout);
 };
@@ -148,15 +151,44 @@ Mesh PrimitiveCreator::CreatePrism(){
         };
     
     VertexBufferLayout layout;
-        layout.Push<float>(3);
+    layout.Push<float>(3);
     
     return Mesh(vertices,indices,layout);
 };
 
-Mesh PrimitiveCreator::CreateCircle(){
-    
+Mesh PrimitiveCreator::CreateCircle(int segments,float radius){
+    std::vector<float> vertices;
+    std::vector<unsigned int> indices;
+
+    //center
+    vertices.push_back(0);
+    vertices.push_back(0);
+    vertices.push_back(0);
+    float angle=glm::pi<float>()*2.0f/segments;
+    for(int i=0; i<segments; i++){
+        float x=radius*std::sin(angle*i);
+        float y=-radius*std::cos(angle*i);
+        vertices.push_back(x);
+        vertices.push_back(y);
+        vertices.push_back(0);
+    }
+
+    for(int i=0; i<segments; i++){
+        unsigned int current=i+1;
+        unsigned int next=((i+1)%segments)+1;
+
+        indices.push_back(0);
+        indices.push_back(next);
+        indices.push_back(current);
+    }
+
+    VertexBufferLayout layout;
+    layout.Push<float>(3);
+
+    return Mesh(vertices,indices,layout);
 };
 
+/*
 Mesh PrimitiveCreator::CreateSphere(){
  
 };
@@ -168,3 +200,5 @@ Mesh PrimitiveCreator::CreateCone(){
 Mesh PrimitiveCreator::CreateCylinder(){
 
 };
+
+*/
