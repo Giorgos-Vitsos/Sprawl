@@ -24,8 +24,8 @@ Mesh PrimitiveCreator::CreatePlane(){
 
 Mesh PrimitiveCreator::CreateTriangle(){
     std::vector<float> vertices = {
-            -0.5f,  0.0f, 0.0f, //bottom L
-            0.5f, 0.0f, 0.0f, //bottom R
+            -0.5f,  -0.5f, 0.0f, //bottom L
+            0.5f, -0.5f, 0.0f, //bottom R
             0.0f, 0.5f, 0.0f //top
         };
 
@@ -104,12 +104,12 @@ Mesh PrimitiveCreator::CreateCube(){
 Mesh PrimitiveCreator::CreatePyramid(){
     std::vector<float> vertices = {
             //bottom
-            -0.5f,  0.0f, 0.5f, //0
-            0.5f, 0.0f, 0.5f, //1
-            0.5f, 0.0f, -0.5f, //2
-            -0.5f,  0.0f, -0.5f,  //3
+            -0.5f,  -0.5f, 0.5f, //0
+            0.5f, -0.5f, 0.5f, //1
+            0.5f, -0.5f, -0.5f, //2
+            -0.5f,  -0.5f, -0.5f,  //3
             //top
-            0.0f,1.0f,0.0f //4
+            0.0f,0.5f,0.0f //4
         };
 
     std::vector<unsigned int> indices = {
@@ -130,13 +130,13 @@ Mesh PrimitiveCreator::CreatePyramid(){
 Mesh PrimitiveCreator::CreatePrism(){
     std::vector<float> vertices = {
         //front triangle
-            -0.5f,  0.0f, 0.5f, //bottom L
-            0.5f, 0.0f, 0.5f, //bottom R
-            0.0f, 1.0f, 0.5f, //top
+            -0.5f,  -0.5f, 0.5f, //bottom L
+            0.5f, -0.5f, 0.5f, //bottom R
+            0.0f, 0.5f, 0.5f, //top
         //back triangle
-            -0.5f,  0.0f, -0.5f, //bottom L
-            0.5f, 0.0f, -0.5f, //bottom R
-            0.0f, 1.0f, -0.5f, //top
+            -0.5f,  -0.5f, -0.5f, //bottom L
+            0.5f, -0.5f, -0.5f, //bottom R
+            0.0f, 0.5f, -0.5f, //top
         };
 
     std::vector<unsigned int> indices = {
@@ -199,7 +199,7 @@ Mesh PrimitiveCreator::CreateCone(int segments,float radius){
 
     //center
     vertices.push_back(0);
-    vertices.push_back(0);
+    vertices.push_back(-0.5f);
     vertices.push_back(0);
 
 
@@ -208,13 +208,13 @@ Mesh PrimitiveCreator::CreateCone(int segments,float radius){
         float x=radius*std::sin(angle*i);
         float y=-radius*std::cos(angle*i);
         vertices.push_back(x);
-        vertices.push_back(0);
+        vertices.push_back(-0.5f);
         vertices.push_back(y);
     }
 
     //top
     vertices.push_back(0);
-    vertices.push_back(1);
+    vertices.push_back(0.5f);
     vertices.push_back(0);
 
     //bottom
