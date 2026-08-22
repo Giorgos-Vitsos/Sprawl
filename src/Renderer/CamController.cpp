@@ -1,7 +1,7 @@
 #include "CamController.h"
 #include "InputController.h"
 
-CamController::CamController(PerspectiveCamera &camera):m_Camera(camera),m_Sensitivity(0.005f),m_PanningSpeed(0.02f),m_ZoomSpeed(0.08f){}
+CamController::CamController(PerspectiveCamera &camera):m_Camera(camera),m_Sensitivity(0.005f),m_PanningSpeed(0.005f),m_ZoomSpeed(0.08f){}
 
 void CamController::Update(float deltaTime){
     glm::vec2 delta=InputController::GetMouseDelta();

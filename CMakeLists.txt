@@ -45,6 +45,11 @@ target_include_directories(Engine PRIVATE
 # Link your executable to GLFW and OpenGL
 target_link_libraries(Engine PRIVATE glfw OpenGL::GL)
 
+if(MSVC)
+    # Disables incremental linking specifically for Debug builds
+    target_link_options(Engine PRIVATE "$<$<CONFIG:Debug>:/INCREMENTAL:NO>")
+endif()
+
 # Create a custom 'run' target
 add_custom_target(run
     COMMAND $<TARGET_FILE:Engine>
