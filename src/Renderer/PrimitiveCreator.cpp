@@ -243,9 +243,74 @@ Mesh PrimitiveCreator::CreateCone(int segments,float radius){
     return Mesh(vertices,indices,layout);
 };
 
-/*
 Mesh PrimitiveCreator::CreateCylinder(int segments,float radius){
+    std::vector<float> vertices;
+    std::vector<unsigned int> indices;
 
+    float angle=glm::pi<float>()*2.0f/segments;
+    //cicle 1
+    vertices.push_back(0);
+    vertices.push_back(-0.5f);
+    vertices.push_back(0);
+    for(int i=0; i<segments; i++){
+        float x=radius*std::sin(angle*i);
+        float y=-radius*std::cos(angle*i);
+        vertices.push_back(x);
+        vertices.push_back(-0.5f);
+        vertices.push_back(y);
+    }
+
+    for(int i=0; i<segments; i++){
+        unsigned int current=i+1;
+        unsigned int next=((i+1)%segments)+1;
+
+        indices.push_back(0);
+        indices.push_back(current);
+        indices.push_back(next);
+    }
+
+
+    //circle2
+    int offset=segments+1;
+    vertices.push_back(0);
+    vertices.push_back(0.5f);
+    vertices.push_back(0);
+    for(int i=0; i<segments; i++){
+        float x=radius*std::sin(angle*i);
+        float y=-radius*std::cos(angle*i);
+        vertices.push_back(x);
+        vertices.push_back(0.5f);
+        vertices.push_back(y);
+    }
+
+    
+    for(int i=0; i<segments; i++){
+        unsigned int current=i+1;
+        unsigned int next=((i+1)%segments)+1;
+
+        indices.push_back(offset);
+        indices.push_back(next+offset);
+        indices.push_back(current+offset);
+    }
+
+    //sides
+    for(int i=0; i<segments; i++){
+        glm::vec3 triangle1,triangle2;
+        unsigned int current=i+1;
+        unsigned int next=((i+1)%segments)+1;
+        triangle1={current,current+offset,next};
+        triangle2={next,current+offset,next+offset};
+        indices.push_back(triangle1.x);
+        indices.push_back(triangle1.y);
+        indices.push_back(triangle1.z);
+        indices.push_back(triangle2.x);
+        indices.push_back(triangle2.y);
+        indices.push_back(triangle2.z);
+    }
+
+    VertexBufferLayout layout;
+    layout.Push<float>(3);
+
+    return Mesh(vertices,indices,layout);
 };
 
-*/
