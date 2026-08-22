@@ -188,11 +188,6 @@ Mesh PrimitiveCreator::CreateCircle(int segments,float radius){
     return Mesh(vertices,indices,layout);
 };
 
-/*
-Mesh PrimitiveCreator::CreateSphere(){
- 
-};
-*/
 Mesh PrimitiveCreator::CreateCone(int segments,float radius){
     std::vector<float> vertices;
     std::vector<unsigned int> indices;
@@ -295,17 +290,14 @@ Mesh PrimitiveCreator::CreateCylinder(int segments,float radius){
 
     //sides
     for(int i=0; i<segments; i++){
-        glm::vec3 triangle1,triangle2;
         unsigned int current=i+1;
         unsigned int next=((i+1)%segments)+1;
-        triangle1={current,current+offset,next};
-        triangle2={next,current+offset,next+offset};
-        indices.push_back(triangle1.x);
-        indices.push_back(triangle1.y);
-        indices.push_back(triangle1.z);
-        indices.push_back(triangle2.x);
-        indices.push_back(triangle2.y);
-        indices.push_back(triangle2.z);
+        indices.push_back(current);
+        indices.push_back(current+offset);
+        indices.push_back(next);
+        indices.push_back(next);
+        indices.push_back(current+offset);
+        indices.push_back(next+offset);
     }
 
     VertexBufferLayout layout;
@@ -314,3 +306,45 @@ Mesh PrimitiveCreator::CreateCylinder(int segments,float radius){
     return Mesh(vertices,indices,layout);
 };
 
+Mesh PrimitiveCreator::CreateSphere(int sectors,int stacks,float radius){
+    std::vector<float> vertices;
+    std::vector<unsigned int> indices;
+
+    for(int i=0; i<=stacks;i++){
+        float phi=glm::pi<float>()*((float)i/(float)stacks);
+        float y=radius*std::cos(phi);
+        float sliceRadius=radius*std::sin(phi);
+
+        for(int j=0; j<=sectors;j++){
+            float theta=2*glm::pi<float>()*((float)j/(float)sectors);
+            float x=sliceRadius*std::sin(theta);
+            float z=sliceRadius*std::cos(theta);
+            vertices.push_back(x);
+            vertices.push_back(y);
+            vertices.push_back(z);
+        }
+    }
+
+    for(int i=0; i<stacks;i++){
+        for(int j=0; j<sectors;j++){
+
+            unsigned int A=(i*(sectors+1)+j);
+            unsigned int B=A+1;
+            unsigned int C=(i+1)*(sectors+1)+j;
+            unsigned int D=C+1;
+
+            indices.push_back(A);
+            indices.push_back(C);
+            indices.push_back(B);
+            indices.push_back(B);
+            indices.push_back(C);
+            indices.push_back(D);
+        }
+    }
+
+    VertexBufferLayout layout;
+    layout.Push<float>(3);
+
+    return Mesh(vertices,indices,layout);
+
+};
