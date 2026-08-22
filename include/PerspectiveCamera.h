@@ -13,6 +13,7 @@ class PerspectiveCamera{
         const glm::vec2 GetPichYaw() const;
         const glm::vec3 GetPos() const {return m_Pos;};
         const glm::vec3 GetFocalPoint() const{ return m_FocalPoint;};
+        const float GetDis() const{return m_Distance;};
     private:
         void RecalcViewMatrix();
         glm::mat4 m_ProjMatrix;

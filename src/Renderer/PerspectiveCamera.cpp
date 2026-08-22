@@ -25,7 +25,7 @@ void PerspectiveCamera::SetFocalPoint(const glm::vec3& focalPoint){
 };
 
 void PerspectiveCamera::SetDis(float dis){
-    m_Distance=dis;
+    m_Distance=std::clamp(dis,0.1f,INFINITY);
     RecalcViewMatrix();
 };
 

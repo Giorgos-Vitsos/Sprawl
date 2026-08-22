@@ -7,8 +7,9 @@ class CamController{
     private:
         float m_Sensitivity;
         float m_PanningSpeed;
+        float m_ZoomSpeed;
         PerspectiveCamera &m_Camera;
         void Move(glm::vec2 &delta);
         void Pan(glm::vec2 &delta);
-        void Zoom(glm::vec2 &delta);
+        void Zoom();
 };

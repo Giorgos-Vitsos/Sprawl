@@ -1,8 +1,7 @@
 #include "CamController.h"
 #include "InputController.h"
-#include <iostream>
 
-CamController::CamController(PerspectiveCamera &camera):m_Camera(camera),m_Sensitivity(0.005f),m_PanningSpeed(0.02f){}
+CamController::CamController(PerspectiveCamera &camera):m_Camera(camera),m_Sensitivity(0.005f),m_PanningSpeed(0.02f),m_ZoomSpeed(0.08f){}
 
 void CamController::Update(float deltaTime){
     glm::vec2 delta=InputController::GetMouseDelta();
@@ -13,8 +12,7 @@ void CamController::Update(float deltaTime){
             Move(delta);
         }
     }
-    
-    
+    Zoom();
 }
 
 void CamController::Move(glm::vec2 &delta){
@@ -34,3 +32,10 @@ void CamController::Pan(glm::vec2 &delta){
     glm::vec3 y=delta.y*localUp*m_PanningSpeed;
     m_Camera.SetFocalPoint(glm::vec3(m_Camera.GetFocalPoint()-x+y));
 }
+
+void CamController::Zoom(){
+    double scrollDeltaY=InputController::GetScrollDeltaY();
+    float dis=m_Camera.GetDis()-scrollDeltaY*m_ZoomSpeed;
+    m_Camera.SetDis(dis);
+}
+    
