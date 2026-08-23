@@ -70,6 +70,7 @@ public:
      */
     unsigned int GetIndexCount() const;
 
+    void Draw();
 private:
     VertexArray m_VAO;
     VertexBuffer m_VBO;
