@@ -11,6 +11,7 @@
 #include "PrimitiveCreator.h"
 #include "Transform.h"
 #include "CamController.h"
+#include "TimeHelper.h"
 
 int main() {
     try {
@@ -21,7 +22,6 @@ int main() {
         
         Mesh cube=PrimitiveCreator::CreateCube();
         Transform cubeTRS;
-        cubeTRS.SetScale(glm::vec3(0.4,1,0.2));
 
         Shader shader("assets/shaders/Basic.vert", "assets/shaders/Basic.frag");
 
@@ -30,9 +30,10 @@ int main() {
 
         glEnable(GL_DEPTH_TEST);
         while (!window.ShouldClose()) {
-
+            TimeHelper::Tick();
+            
             window.ProcessInput();
-            controller.Update(0);
+            controller.Update();
             glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             //first object
@@ -41,7 +42,7 @@ int main() {
             cube.Bind();
             glDrawElements(GL_TRIANGLES, cube.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
             //second object
-            triangleTRS.SetPos(glm::vec3(1.2f,-0.5,0));
+            triangleTRS.SetPos(glm::vec3(1.2f,0,0));
             glm::mat4 mvp2=camera.GetViewProjMatrix()*triangleTRS.GetModelMatrix();
             shader.SetUniformMat4f("u_MVP",mvp2);
             triangle.Bind();
