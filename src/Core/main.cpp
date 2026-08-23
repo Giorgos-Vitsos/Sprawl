@@ -1,18 +1,9 @@
 #include "Window.h"
-#include "VertexBuffer.h"
-#include "VertexArray.h"
-#include "Shader.h"
-#include "IndexBuffer.h"
-#include "VertexBufferLayout.h"
-#include "Mesh.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <iostream>
 #include "PrimitiveCreator.h"
-#include "Transform.h"
 #include "CamController.h"
 #include "TimeHelper.h"
 #include "Renderer.h"
+#include <iostream>
 
 int main() {
     try {
@@ -28,10 +19,11 @@ int main() {
 
         PerspectiveCamera camera(45.0f,800.0f/600.0f,0.1f,100.0f);
         CamController controller(camera);
+
         Renderer renderer;
 
-        glEnable(GL_DEPTH_TEST);
         while (!window.ShouldClose()) {
+
             TimeHelper::Tick();
             renderer.Clear();
 
@@ -39,7 +31,8 @@ int main() {
             controller.Update();
 
             renderer.Draw(cube,shader,cubeTRS,camera);
-            triangleTRS.SetPos(glm::vec3(1.2f,0,0));
+            triangleTRS.SetPos(glm::vec3(0,0,-5));
+            triangleTRS.SetScale(glm::vec3(5,5,5));
             renderer.Draw(triangle,shader,triangleTRS,camera);
 
             window.SwapBuffersAndPoll();
