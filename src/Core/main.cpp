@@ -12,6 +12,7 @@
 #include "Transform.h"
 #include "CamController.h"
 #include "TimeHelper.h"
+#include "Renderer.h"
 
 int main() {
     try {
@@ -27,26 +28,19 @@ int main() {
 
         PerspectiveCamera camera(45.0f,800.0f/600.0f,0.1f,100.0f);
         CamController controller(camera);
+        Renderer renderer;
 
         glEnable(GL_DEPTH_TEST);
         while (!window.ShouldClose()) {
             TimeHelper::Tick();
-            
+            renderer.Clear();
+
             window.ProcessInput();
             controller.Update();
-            glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            //first object
-            glm::mat4 mvp1=camera.GetViewProjMatrix()*cubeTRS.GetModelMatrix();
-            shader.SetUniformMat4f("u_MVP",mvp1);
-            cube.Bind();
-            cube.Draw();
-            //second object
+
+            renderer.Draw(cube,shader,cubeTRS,camera);
             triangleTRS.SetPos(glm::vec3(1.2f,0,0));
-            glm::mat4 mvp2=camera.GetViewProjMatrix()*triangleTRS.GetModelMatrix();
-            shader.SetUniformMat4f("u_MVP",mvp2);
-            triangle.Bind();
-            triangle.Draw();
+            renderer.Draw(triangle,shader,triangleTRS,camera);
 
             window.SwapBuffersAndPoll();
         }
