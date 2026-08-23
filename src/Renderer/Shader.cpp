@@ -106,3 +106,39 @@ void Shader::SetUniformMat4f(const std::string &name,const glm::mat4 &matrix){
     }
     glUniformMatrix4fv(location,1,GL_FALSE,glm::value_ptr(matrix));
 }
+
+void Shader::SetUniform1i(const std::string& name,const int value){
+    Bind();
+    int location=GetUniformLoc(name);
+    if(location==-1){
+        std::cout<<"Warning: uniform "<<name<<"couldnt be found"<<std::endl;
+    }
+    glUniform1i(location,value);
+};
+
+void Shader::SetUniform1f(const std::string& name,const float value){
+    Bind();
+    int location=GetUniformLoc(name);
+    if(location==-1){
+        std::cout<<"Warning: uniform "<<name<<"couldnt be found"<<std::endl;
+    }
+    glUniform1f(location,value);
+};
+
+void Shader::SetUniform3f(const std::string& name,const glm::vec3 &value){
+    Bind();
+    int location=GetUniformLoc(name);
+    if(location==-1){
+        std::cout<<"Warning: uniform "<<name<<"couldnt be found"<<std::endl;
+    }
+    glUniform3f(location,value.x,value.y,value.z);
+};
+
+void Shader::SetUniform4f(const std::string& name,const glm::vec4 &value){
+    Bind();
+    int location=GetUniformLoc(name);
+    if(location==-1){
+        std::cout<<"Warning: uniform "<<name<<"couldnt be found"<<std::endl;
+    }
+    glUniform4f(location,value.x,value.y,value.z,value.w);
+};
