@@ -38,6 +38,10 @@ public:
      */
     void Unbind() const;
     void SetUniformMat4f(const std::string &name,const glm::mat4 &matrix);
+    void SetUniform1i(const std::string& name,const int value);
+    void SetUniform1f(const std::string& name,const float value);
+    void SetUniform3f(const std::string& name,const glm::vec3 &value);
+    void SetUniform4f(const std::string& name,const glm::vec4 &value);
 
 private:
     unsigned int m_ID;
