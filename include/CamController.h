@@ -3,7 +3,7 @@
 class CamController{
     public:
         CamController(PerspectiveCamera &camera);
-        void Update(float deltaTime);
+        void Update();
     private:
         float m_Sensitivity;
         float m_PanningSpeed;
