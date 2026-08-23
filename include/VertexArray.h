@@ -65,4 +65,5 @@ public:
 
 private:
     unsigned int m_ID;
+    unsigned int GetSizeOfType(GLenum type);
 };
