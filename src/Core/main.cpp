@@ -40,13 +40,13 @@ int main() {
             glm::mat4 mvp1=camera.GetViewProjMatrix()*cubeTRS.GetModelMatrix();
             shader.SetUniformMat4f("u_MVP",mvp1);
             cube.Bind();
-            glDrawElements(GL_TRIANGLES, cube.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
+            cube.Draw();
             //second object
             triangleTRS.SetPos(glm::vec3(1.2f,0,0));
             glm::mat4 mvp2=camera.GetViewProjMatrix()*triangleTRS.GetModelMatrix();
             shader.SetUniformMat4f("u_MVP",mvp2);
             triangle.Bind();
-            glDrawElements(GL_TRIANGLES, triangle.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
+            triangle.Draw();
 
             window.SwapBuffersAndPoll();
         }
