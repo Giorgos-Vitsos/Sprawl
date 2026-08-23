@@ -7,6 +7,7 @@
 
 class Renderer{
     public:
+        Renderer();
         void Clear();
         void Draw(Mesh &mesh,Shader &shader,Transform &trs,PerspectiveCamera &camera);
 };
