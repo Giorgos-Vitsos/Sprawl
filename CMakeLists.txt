@@ -34,6 +34,7 @@ add_executable(Engine
     src/Renderer/PerspectiveCamera.cpp
     src/Core/InputController.cpp
     src/Renderer/CamController.cpp
+    src/Core/TimeHelper.cpp
 )
 
 # Tell CMake to look in the 'include' folder for header files
