@@ -1,17 +1,9 @@
 #include "Window.h"
-#include "VertexBuffer.h"
-#include "VertexArray.h"
-#include "Shader.h"
-#include "IndexBuffer.h"
-#include "VertexBufferLayout.h"
-#include "Mesh.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <iostream>
 #include "PrimitiveCreator.h"
-#include "Transform.h"
 #include "CamController.h"
 #include "TimeHelper.h"
+#include "Renderer.h"
+#include <iostream>
 
 int main() {
     try {
@@ -28,25 +20,20 @@ int main() {
         PerspectiveCamera camera(45.0f,800.0f/600.0f,0.1f,100.0f);
         CamController controller(camera);
 
-        glEnable(GL_DEPTH_TEST);
+        Renderer renderer;
+
         while (!window.ShouldClose()) {
+
             TimeHelper::Tick();
-            
+            renderer.Clear();
+
             window.ProcessInput();
             controller.Update();
-            glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            //first object
-            glm::mat4 mvp1=camera.GetViewProjMatrix()*cubeTRS.GetModelMatrix();
-            shader.SetUniformMat4f("u_MVP",mvp1);
-            cube.Bind();
-            glDrawElements(GL_TRIANGLES, cube.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
-            //second object
-            triangleTRS.SetPos(glm::vec3(1.2f,0,0));
-            glm::mat4 mvp2=camera.GetViewProjMatrix()*triangleTRS.GetModelMatrix();
-            shader.SetUniformMat4f("u_MVP",mvp2);
-            triangle.Bind();
-            glDrawElements(GL_TRIANGLES, triangle.GetIndexCount(), GL_UNSIGNED_INT, nullptr);
+
+            renderer.Draw(cube,shader,cubeTRS,camera);
+            triangleTRS.SetPos(glm::vec3(0,0,-5));
+            triangleTRS.SetScale(glm::vec3(5,5,5));
+            renderer.Draw(triangle,shader,triangleTRS,camera);
 
             window.SwapBuffersAndPoll();
         }
