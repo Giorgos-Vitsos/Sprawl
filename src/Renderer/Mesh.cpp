@@ -22,6 +22,11 @@ unsigned int Mesh::GetIndexCount() const
     return m_IBO.GetCount();
 }
 
+unsigned int Mesh::GetVerticesCount() const
+{
+    return m_VBO.GetCount();
+}
+
 void Mesh::Draw(){
     Bind();
     glDrawElements(GL_TRIANGLES, GetIndexCount(), GL_UNSIGNED_INT, nullptr);
