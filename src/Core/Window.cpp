@@ -68,3 +68,9 @@ void Window::FrameBufferSizeCallBack(GLFWwindow* window, int width, int height){
 
     glViewport(0, 0, width, height);
 }
+
+void Window::SetStats(RendererStats statStruct){
+    std::string stats="FPS: "+std::to_string(statStruct.fps)+" | "+"Calls: "+std::to_string(statStruct.calls)+" | "+"Triangles: "+std::to_string(statStruct.triangles)+" | "+"Vertices: "+std::to_string(statStruct.vertices); 
+    glfwSetWindowTitle(m_Window,stats.c_str());
+}
+
