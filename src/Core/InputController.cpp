@@ -1,40 +1,40 @@
 #include "InputController.h"
 
-GLFWwindow *InputController::m_Window=nullptr;
-double InputController::m_LastY=0;
-double InputController::m_LastX=0;
-double InputController::m_ScrollDeltaY=0;
+GLFWwindow *InputController::s_Window=nullptr;
+double InputController::s_LastY=0;
+double InputController::s_LastX=0;
+double InputController::s_ScrollDeltaY=0;
 
 void InputController::Init(GLFWwindow *window){
-    m_Window=window;
-    glfwGetCursorPos(m_Window,&m_LastX,&m_LastY);
-    glfwSetScrollCallback(m_Window,ScrollCallback);
+    s_Window=window;
+    glfwGetCursorPos(s_Window,&s_LastX,&s_LastY);
+    glfwSetScrollCallback(s_Window,ScrollCallback);
 }
 
 bool InputController::IsKeyPressed(int keycode){
-    return glfwGetKey(m_Window, keycode) == GLFW_PRESS;
+    return glfwGetKey(s_Window, keycode) == GLFW_PRESS;
 }
 
 bool InputController::IsMouseButtonPressed(int button){
-    return glfwGetMouseButton(m_Window,button)==GLFW_PRESS;
+    return glfwGetMouseButton(s_Window,button)==GLFW_PRESS;
 };
 
 glm::vec2 InputController::GetMouseDelta(){
     double curX,curY,deltaX,deltaY;
-    glfwGetCursorPos(m_Window,&curX,&curY);
-    deltaX=curX-m_LastX;
-    deltaY=curY-m_LastY;
-    m_LastX=curX;
-    m_LastY=curY;
+    glfwGetCursorPos(s_Window,&curX,&curY);
+    deltaX=curX-s_LastX;
+    deltaY=curY-s_LastY;
+    s_LastX=curX;
+    s_LastY=curY;
     return glm::vec2{deltaX,deltaY};
 };
 
 double InputController::GetScrollDeltaY(){
-    double scrollDeltaY=m_ScrollDeltaY;
-    m_ScrollDeltaY=0;
+    double scrollDeltaY=s_ScrollDeltaY;
+    s_ScrollDeltaY=0;
     return scrollDeltaY;
 };
 
 void InputController::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset){
-    m_ScrollDeltaY+=yoffset;
+    s_ScrollDeltaY+=yoffset;
 };

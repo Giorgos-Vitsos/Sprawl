@@ -12,8 +12,8 @@ class InputController{
         static double GetScrollDeltaY();
         static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
     private:
-        static GLFWwindow *m_Window;
-        static double m_LastY;
-        static double m_LastX;
-        static double m_ScrollDeltaY;
+        static GLFWwindow *s_Window;
+        static double s_LastY;
+        static double s_LastX;
+        static double s_ScrollDeltaY;
 };
