@@ -34,6 +34,7 @@ int main() {
             triangleTRS.SetPos(glm::vec3(0,0,-5));
             triangleTRS.SetScale(glm::vec3(5,5,5));
             renderer.Draw(triangle,shader,triangleTRS,camera);
+            window.SetStats(renderer.GetStats());
 
             window.SwapBuffersAndPoll();
         }

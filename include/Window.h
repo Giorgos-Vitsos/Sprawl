@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <string>
+#include "Renderer.h"
 
 /**
  * @brief Manages the application's window and OpenGL context.
@@ -64,6 +65,7 @@ public:
     int GetHeight() const { return m_Height; }
 
     GLFWwindow *GetWindow(){ return m_Window;}
+    void SetStats(RendererStats statStruct);
 
 private:
     /**

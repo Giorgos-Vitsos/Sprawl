@@ -56,6 +56,9 @@ public:
      */
     void Unbind() const;
 
+    unsigned int GetCount() const { return m_Count; }
+
 private:
     unsigned int m_ID;
+    unsigned int m_Count;
 };

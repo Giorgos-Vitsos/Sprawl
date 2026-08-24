@@ -1,7 +1,7 @@
 #include "VertexBuffer.h"
 #include <glad/glad.h>
 
-VertexBuffer::VertexBuffer(const void*data, unsigned int size){
+VertexBuffer::VertexBuffer(const void*data, unsigned int size):m_Count(size/sizeof(float)/3){
     glGenBuffers(1,&m_ID);
     Bind();
     glBufferData(GL_ARRAY_BUFFER,size,data,GL_STATIC_DRAW);
