@@ -69,10 +69,12 @@ public:
      * @return Number of indices stored in the index buffer.
      */
     unsigned int GetIndexCount() const;
+    unsigned int GetVerticesCount() const;
 
     void Draw();
 private:
     VertexArray m_VAO;
     VertexBuffer m_VBO;
     IndexBuffer m_IBO;
+    VertexBufferLayout m_Layout;
 };
