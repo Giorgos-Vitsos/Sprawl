@@ -76,4 +76,5 @@ private:
     VertexArray m_VAO;
     VertexBuffer m_VBO;
     IndexBuffer m_IBO;
+    VertexBufferLayout m_Layout;
 };
