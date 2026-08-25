@@ -27,7 +27,9 @@ VertexBuffer& VertexBuffer::operator=(VertexBuffer&& other) noexcept {
     if (this != &other) { 
         glDeleteBuffers(1, &m_ID); 
         m_ID = other.m_ID;         
-        other.m_ID = 0;           
+        other.m_ID = 0;
+        m_Count=other.m_Count;
+        other.m_Count=0;           
     }
     return *this;
 }
@@ -42,9 +44,12 @@ void VertexBuffer::Unbind() const{
 
 void VertexBuffer::SetData(const void *data,unsigned int size){
     Bind();
-    if(size<=m_Count){
-        glBufferSubData(GL_ARRAY_BUFFER,0,size,data);
-    }else{
-        throw std::runtime_error("Data size exceeds the buffer\n");
+    if(size>m_Count){
+        if(size>m_Count*2){
+            *this=VertexBuffer(size);
+        }else{
+            *this=VertexBuffer(m_Count*2);
+        }
     }
+    glBufferSubData(GL_ARRAY_BUFFER,0,size,data); 
 };
