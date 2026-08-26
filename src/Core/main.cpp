@@ -37,6 +37,7 @@ int main() {
             triangleTRS.SetScale(glm::vec3(5,5,5));
             renderer.Draw(triangle,shader,triangleTRS,camera);
             Gizmos::DrawGrid();
+            Gizmos::DrawWireCube();
             window.SetStats(renderer.GetStats());
             Gizmos::Render(camera);
             window.SwapBuffersAndPoll();

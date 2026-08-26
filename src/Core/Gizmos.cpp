@@ -1,20 +1,21 @@
 #include "Gizmos.h"
-#include "VertexBufferLayout.h"
+
 
 Shader* Gizmos::s_Shader=nullptr;
 VertexArray* Gizmos::s_VAO=nullptr;
 VertexBuffer* Gizmos::s_VBO=nullptr;
+VertexBufferLayout* Gizmos::s_Layout=nullptr;
 std::vector<DebugVertex> Gizmos::s_Vertices;
 
 void Gizmos::Init(){
     s_Shader=new Shader("assets/shaders/Gizmos.vert", "assets/shaders/Gizmos.frag");
     s_VAO=new VertexArray();
-    VertexBufferLayout layout;
-    layout.Push<float>(3);
-    layout.Push<float>(3);
-    s_VBO=new VertexBuffer(1000000);
-    s_VAO->AddBuffer(*s_VBO,layout);
-    s_Vertices.reserve(1000000);
+    s_Layout=new VertexBufferLayout();
+    s_Layout->Push<float>(3);
+    s_Layout->Push<float>(3);
+    s_VBO=new VertexBuffer(1000);
+    s_VAO->AddBuffer(*s_VBO,*s_Layout);
+    s_Vertices.reserve(1000);
 }
 
 void Gizmos::Destroy(){
@@ -26,7 +27,9 @@ void Gizmos::Destroy(){
 void Gizmos::Render(PerspectiveCamera &camera){
     if(s_Vertices.size()==0) return;
     unsigned int totalSize=s_Vertices.size()*sizeof(DebugVertex);
-    s_VBO->SetData(s_Vertices.data(),totalSize);
+    if(!s_VBO->SetData(s_Vertices.data(),totalSize)){
+        s_VAO->AddBuffer(*s_VBO,*s_Layout);
+    }
     s_VAO->Bind();
     s_Shader->Bind();
     s_Shader->SetUniformMat4f("u_MVP",camera.GetViewProjMatrix());
@@ -51,8 +54,8 @@ void Gizmos::DrawWireCube(const glm::vec3& center,const float size,const glm::ve
     glm::vec3 topBL=center+glm::vec3(-offset,offset,offset);
     glm::vec3 topFR=center+glm::vec3(offset,offset,-offset);
     glm::vec3 topBR=center+glm::vec3(offset,offset,offset);
-    glm::vec3 bottomFL=center+glm::vec3(offset,-offset,-offset);
-    glm::vec3 bottomBL=center+glm::vec3(offset,-offset,offset);
+    glm::vec3 bottomFL=center+glm::vec3(-offset,-offset,-offset);
+    glm::vec3 bottomBL=center+glm::vec3(-offset,-offset,offset);
     glm::vec3 bottomFR=center+glm::vec3(offset,-offset,-offset);
     glm::vec3 bottomBR=center+glm::vec3(offset,-offset,offset);
 
