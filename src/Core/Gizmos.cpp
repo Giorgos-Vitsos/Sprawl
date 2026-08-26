@@ -7,7 +7,7 @@ VertexBuffer* Gizmos::s_VBO=nullptr;
 std::vector<DebugVertex> Gizmos::s_Vertices;
 
 void Gizmos::Init(){
-    s_Shader=new Shader("assets/shaders/Debug.vert", "assets/shaders/Debug.frag");
+    s_Shader=new Shader("assets/shaders/Gizmos.vert", "assets/shaders/Gizmos.frag");
     s_VAO=new VertexArray();
     VertexBufferLayout layout;
     layout.Push<float>(3);
