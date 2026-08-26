@@ -60,7 +60,7 @@ public:
 
     unsigned int GetCount() const { return m_Count; }
 
-    void SetData(const void *data,unsigned int size);
+    bool SetData(const void *data,unsigned int size);
 
 private:
     unsigned int m_ID;

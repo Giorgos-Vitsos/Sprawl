@@ -42,14 +42,18 @@ void VertexBuffer::Unbind() const{
     glBindBuffer(GL_ARRAY_BUFFER,0);
 }
 
-void VertexBuffer::SetData(const void *data,unsigned int size){
+bool VertexBuffer::SetData(const void *data,unsigned int size){
+    bool flag;
     Bind();
     if(size>m_Count){
         if(size>m_Count*2){
             *this=VertexBuffer(size);
+            flag=true;
         }else{
             *this=VertexBuffer(m_Count*2);
+            flag=false;
         }
     }
-    glBufferSubData(GL_ARRAY_BUFFER,0,size,data); 
+    glBufferSubData(GL_ARRAY_BUFFER,0,size,data);
+    return flag;
 };
