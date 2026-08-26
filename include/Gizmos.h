@@ -17,9 +17,9 @@ class Gizmos{
         Gizmos()=delete;
         static void Init();
         static void Destroy();
-        static void DrawLine(const glm::vec3& start,const glm::vec3& end,const glm::vec3& color);
-        static void DrawGrid(const glm::vec3& center,const float size,const int spacing,const glm::vec3& color);
-        static void DrawWireCube(const glm::vec3& center,const float size,const glm::vec3& color);
+        static void DrawLine(const glm::vec3& start,const glm::vec3& end,const glm::vec3& color={0.2f,0.8f,0.6f});
+        static void DrawGrid(const glm::vec3& center={0,0,0},const float size=20,const int spacing=1,const glm::vec3& color={0.2f,0.8f,0.6f});
+        static void DrawWireCube(const glm::vec3& center={0,0,0},const float size=1,const glm::vec3& color={0.2f,0.8f,0.6f});
         static void Render(PerspectiveCamera &camera);
     private:
         static Shader *s_Shader;

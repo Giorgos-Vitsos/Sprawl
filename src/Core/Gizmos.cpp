@@ -12,8 +12,9 @@ void Gizmos::Init(){
     VertexBufferLayout layout;
     layout.Push<float>(3);
     layout.Push<float>(3);
-    s_VBO=new VertexBuffer(1000);
-    s_Vertices.reserve(1000);
+    s_VBO=new VertexBuffer(1000000);
+    s_VAO->AddBuffer(*s_VBO,layout);
+    s_Vertices.reserve(1000000);
 }
 
 void Gizmos::Destroy(){
@@ -47,7 +48,7 @@ void Gizmos::DrawWireCube(const glm::vec3& center,const float size,const glm::ve
     float offset=size/2;
 
     glm::vec3 topFL=center+glm::vec3(-offset,offset,-offset);
-    glm::vec3 topBL=center+glm::vec3(center.x-offset,offset,offset);
+    glm::vec3 topBL=center+glm::vec3(-offset,offset,offset);
     glm::vec3 topFR=center+glm::vec3(offset,offset,-offset);
     glm::vec3 topBR=center+glm::vec3(offset,offset,offset);
     glm::vec3 bottomFL=center+glm::vec3(offset,-offset,-offset);
