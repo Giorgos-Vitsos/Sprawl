@@ -17,6 +17,8 @@ public:
      */
     VertexBuffer(const void *data, unsigned int size);
 
+    VertexBuffer(unsigned int maxSize);
+
     /**
      * @brief Destroys the vertex buffer.
      */
@@ -57,6 +59,8 @@ public:
     void Unbind() const;
 
     unsigned int GetCount() const { return m_Count; }
+
+    bool SetData(const void *data,unsigned int size);
 
 private:
     unsigned int m_ID;

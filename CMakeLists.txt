@@ -36,6 +36,7 @@ add_executable(Engine
     src/Renderer/CamController.cpp
     src/Core/TimeHelper.cpp
     src/Core/Renderer.cpp
+    src/Core/Gizmos.cpp
 )
 
 # Tell CMake to look in the 'include' folder for header files

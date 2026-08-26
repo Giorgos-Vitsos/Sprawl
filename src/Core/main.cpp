@@ -3,6 +3,7 @@
 #include "CamController.h"
 #include "TimeHelper.h"
 #include "Renderer.h"
+#include "Gizmos.h"
 #include <iostream>
 
 int main() {
@@ -21,6 +22,7 @@ int main() {
         CamController controller(camera);
 
         Renderer renderer;
+        Gizmos::Init();
 
         while (!window.ShouldClose()) {
 
@@ -34,10 +36,13 @@ int main() {
             triangleTRS.SetPos(glm::vec3(0,0,-5));
             triangleTRS.SetScale(glm::vec3(5,5,5));
             renderer.Draw(triangle,shader,triangleTRS,camera);
+            Gizmos::DrawGrid();
+            Gizmos::DrawWireCube();
             window.SetStats(renderer.GetStats());
-
+            Gizmos::Render(camera);
             window.SwapBuffersAndPoll();
         }
+        Gizmos::Destroy();
     } 
 
     catch (const std::exception& e) {
