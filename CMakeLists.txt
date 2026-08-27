@@ -37,6 +37,7 @@ add_executable(Engine
     src/Core/TimeHelper.cpp
     src/Core/Renderer.cpp
     src/Core/Gizmos.cpp
+    src/Core/OpenGLDebug.cpp
 )
 
 # Tell CMake to look in the 'include' folder for header files
@@ -58,4 +59,5 @@ add_custom_target(run
     COMMAND $<TARGET_FILE:Engine>
     DEPENDS Engine
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    USES_TERMINAL
 )

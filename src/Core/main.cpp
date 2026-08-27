@@ -17,7 +17,6 @@ int main() {
         Transform cubeTRS;
 
         Shader shader("assets/shaders/Basic.vert", "assets/shaders/Basic.frag");
-
         PerspectiveCamera camera(45.0f,800.0f/600.0f,0.1f,100.0f);
         CamController controller(camera);
 
@@ -27,8 +26,9 @@ int main() {
         while (!window.ShouldClose()) {
 
             TimeHelper::Tick();
+            Gizmos::DrawGrid();
+            
             renderer.Clear();
-
             window.ProcessInput();
             controller.Update();
 
@@ -36,16 +36,13 @@ int main() {
             triangleTRS.SetPos(glm::vec3(0,0,-5));
             triangleTRS.SetScale(glm::vec3(5,5,5));
             renderer.Draw(triangle,shader,triangleTRS,camera);
-            Gizmos::DrawGrid();
-            Gizmos::DrawWireCube();
+            
             window.SetStats(renderer.GetStats());
             Gizmos::Render(camera);
             window.SwapBuffersAndPoll();
         }
         Gizmos::Destroy();
-    } 
-
-    catch (const std::exception& e) {
+    }catch (const std::exception& e) {
         std::cerr << "Fatal Error: " << e.what() << "\n";
         return -1;
     }
