@@ -24,6 +24,7 @@ Window::Window(int width,int height,const std::string& title):m_Width(width),m_H
     }
 
     glfwMakeContextCurrent(m_Window);
+    glfwSetWindowUserPointer(m_Window,this);
     ChangeVSync(true);
     glfwSetFramebufferSizeCallback(m_Window, FrameBufferSizeCallBack);
 
@@ -67,6 +68,9 @@ void Window::ProcessInput(){
 }
 
 void Window::FrameBufferSizeCallBack(GLFWwindow* window, int width, int height){
+    Window* currWindow=(Window*)glfwGetWindowUserPointer(window);
+    currWindow->m_Height=height;
+    currWindow->m_Width=width;
     glViewport(0, 0, width, height);
 }
 
