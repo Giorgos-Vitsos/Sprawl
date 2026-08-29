@@ -66,15 +66,17 @@ public:
 
     GLFWwindow *GetWindow(){ return m_Window;}
     void SetStats(RendererStats statStruct);
+    void ChangeVSync(bool VSyncIsOn);
 
 private:
     /**
      * @brief GLFW callback invoked when the framebuffer is resized.
      */
     static void FrameBufferSizeCallBack(GLFWwindow *window, int width, int height);
-
+    static void ErrorCallback(int id,const char* desc);
     GLFWwindow *m_Window;
     int m_Width;
     int m_Height;
     std::string m_Title;
+    static int s_WindowCounter;
 };

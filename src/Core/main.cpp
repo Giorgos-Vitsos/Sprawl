@@ -43,7 +43,7 @@ int main() {
         }
         Gizmos::Destroy();
     }catch (const std::exception& e) {
-        std::cerr << "Fatal Error: " << e.what() << "\n";
+        std::cerr << "\n\033[31mFatal Error: " << e.what() << "\033[0m\n";
         return -1;
     }
 
