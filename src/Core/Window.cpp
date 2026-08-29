@@ -4,11 +4,17 @@
 #include "InputController.h"
 #include "OpenGLDebug.h"
 
+
+int Window::s_WindowCounter=0;
+
 Window::Window(int width,int height,const std::string& title):m_Width(width),m_Height(height),m_Title(title),m_Window(nullptr){
-    
-    if (!glfwInit())
-    {
-        throw std::runtime_error("Failed to initialize GLFW\n");
+    glfwSetErrorCallback(ErrorCallback);
+
+    if(s_WindowCounter==0){
+
+        if (!glfwInit()){
+            throw std::runtime_error("Failed to initialize GLFW\n");
+        }
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -19,33 +25,41 @@ Window::Window(int width,int height,const std::string& title):m_Width(width),m_H
     
     if (m_Window == NULL)
     {
-        glfwTerminate();
         throw std::runtime_error("Failed to create GLFW window\n");
     }
 
     glfwMakeContextCurrent(m_Window);
-    glfwSetWindowUserPointer(m_Window,this);
-    ChangeVSync(true);
-    glfwSetFramebufferSizeCallback(m_Window, FrameBufferSizeCallBack);
 
-    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
-    {
-        glfwDestroyWindow(m_Window);
-        glfwTerminate();
-        throw std::runtime_error("Failed to initialize GLAD\n");
+    if(s_WindowCounter==0){
+
+        if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))){
+            glfwTerminate();
+            throw std::runtime_error("Failed to initialize GLAD\n");
+
+        }
+        OpenGLDebug::Init();
     }
+    glfwSetWindowUserPointer(m_Window,this);
+
+    ChangeVSync(true);
+
+    glfwSetFramebufferSizeCallback(m_Window, FrameBufferSizeCallBack);
     glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
     glViewport(0, 0, m_Width, m_Height);
-    OpenGLDebug::Init();
+    
     InputController::Init(GetWindow());
+    s_WindowCounter++;
 }
 
-Window::~Window(){
-
-    if(m_Window){
+Window::~Window()
+{
+    if (m_Window){
         glfwDestroyWindow(m_Window);
+        s_WindowCounter--;
     }
-    glfwTerminate();
+    if (s_WindowCounter == 0){
+        glfwTerminate();
+    }
 }
 
 bool Window::ShouldClose() const{
@@ -89,3 +103,8 @@ void Window::ChangeVSync(bool VSyncIsOn){
          glfwSwapInterval(0);
     }
 };
+
+void Window::ErrorCallback(int id,const char* desc){
+    std::string error="("+ std::to_string(id) +") "+desc;
+    throw std::runtime_error(error);
+}
