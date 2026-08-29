@@ -24,6 +24,7 @@ Window::Window(int width,int height,const std::string& title):m_Width(width),m_H
     }
 
     glfwMakeContextCurrent(m_Window);
+    ChangeVSync(true);
     glfwSetFramebufferSizeCallback(m_Window, FrameBufferSizeCallBack);
 
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
@@ -66,7 +67,6 @@ void Window::ProcessInput(){
 }
 
 void Window::FrameBufferSizeCallBack(GLFWwindow* window, int width, int height){
-
     glViewport(0, 0, width, height);
 }
 
@@ -75,3 +75,13 @@ void Window::SetStats(RendererStats statStruct){
     glfwSetWindowTitle(m_Window,stats.c_str());
 }
 
+void Window::ChangeVSync(bool VSyncIsOn){
+    if(m_Window==nullptr){
+        throw std::runtime_error("Cant change VSync if window is not initialized\n");
+    }
+    if(VSyncIsOn){
+        glfwSwapInterval(1);
+    }else{
+         glfwSwapInterval(0);
+    }
+};

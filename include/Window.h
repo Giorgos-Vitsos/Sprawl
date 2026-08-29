@@ -66,6 +66,7 @@ public:
 
     GLFWwindow *GetWindow(){ return m_Window;}
     void SetStats(RendererStats statStruct);
+    void ChangeVSync(bool VSyncIsOn);
 
 private:
     /**
