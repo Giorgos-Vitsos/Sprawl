@@ -1,9 +1,14 @@
 #include "Renderer.h"
 #include <iostream>
 #include <TimeHelper.h>
+#include <GLFW/glfw3.h>
 
 Renderer::Renderer(){
+    if(glfwGetCurrentContext()== nullptr){
+        throw std::runtime_error("Renderer cant initialize because glfw context dont exist.");
+    }
     glEnable(GL_DEPTH_TEST);
+    ChangeBackFaceCullingState(true);
 }
 
 void Renderer::Clear(){
@@ -23,4 +28,12 @@ void Renderer::Draw(Mesh &mesh,Shader &shader,Transform &trs,PerspectiveCamera &
     m_Stats.triangles+=mesh.GetIndexCount()/3;//3 indices make 1 triangle
     m_Stats.vertices+=mesh.GetVerticesCount();
     m_Stats.calls++;
+};
+
+void Renderer::ChangeBackFaceCullingState(bool state){
+    if(state){
+        glEnable(GL_CULL_FACE);
+    }else{
+        glDisable(GL_CULL_FACE);
+    }
 };

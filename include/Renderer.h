@@ -50,6 +50,13 @@ class Renderer{
          */
         const RendererStats GetStats() { return m_Stats;}
 
+        /**
+         * @brief Enables/Disables backface culling.
+         * 
+         * @param state True to enable and false to disable.
+         */
+        void ChangeBackFaceCullingState(bool state);
+
     private:
         RendererStats m_Stats;
 };
