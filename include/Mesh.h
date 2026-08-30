@@ -69,8 +69,17 @@ public:
      * @return Number of indices stored in the index buffer.
      */
     unsigned int GetIndexCount() const;
+
+    /**
+     * @brief Returns the number of vertices used by the mesh.
+     *
+     * @return Number of vertices stored in the vertex buffer.
+     */
     unsigned int GetVerticesCount() const;
 
+    /**
+     * @brief Connects all vertices and draws the mesh.
+     */
     void Draw();
 private:
     VertexArray m_VAO;

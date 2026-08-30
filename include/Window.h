@@ -64,16 +64,45 @@ public:
      */
     int GetHeight() const { return m_Height; }
 
-    GLFWwindow *GetWindow(){ return m_Window;}
+    /**
+     * @brief Retrieves the GLFWwindow.
+     *
+     * @return A pointer to the GLFWwindow.
+     */
+    GLFWwindow *GetWindow() { return m_Window; }
+
+    /**
+     * @brief Sets engines stats as window title.
+     *
+     * @param statStruct The stats of the engine at the current frame.
+     */
     void SetStats(RendererStats statStruct);
+
+    /**
+     * @brief Enables/Disables VSync.
+     *
+     * @param statStruct VSync's state. True for enable.
+     * @throws runtime_error if GLFWwindow is not set.
+     */
     void ChangeVSync(bool VSyncIsOn);
 
 private:
     /**
      * @brief GLFW callback invoked when the framebuffer is resized.
+     * @param window The current GLFWwindow.
+     * @param width The new width.
+     * @param height The new height.
      */
     static void FrameBufferSizeCallBack(GLFWwindow *window, int width, int height);
-    static void ErrorCallback(int id,const char* desc);
+
+    /**
+     * @brief GLFW callback invoked when the framebuffer is resized.
+     * @param id The current GLFWwindow.
+     * @param desc The new width.
+     * @throws runtime_error if glfwInit fails.
+     */
+    static void ErrorCallback(int id, const char *desc);
+    
     GLFWwindow *m_Window;
     int m_Width;
     int m_Height;
