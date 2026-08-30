@@ -1,5 +1,6 @@
 #include "InputController.h"
 
+//we initialize static variables
 GLFWwindow *InputController::s_Window=nullptr;
 double InputController::s_LastY=0;
 double InputController::s_LastX=0;
@@ -21,7 +22,7 @@ bool InputController::IsMouseButtonPressed(int button){
 
 glm::vec2 InputController::GetMouseDelta(){
     double curX,curY,deltaX,deltaY;
-    glfwGetCursorPos(s_Window,&curX,&curY);
+    glfwGetCursorPos(s_Window,&curX,&curY);//we calculate the location from frame to frame
     deltaX=curX-s_LastX;
     deltaY=curY-s_LastY;
     s_LastX=curX;
@@ -31,7 +32,7 @@ glm::vec2 InputController::GetMouseDelta(){
 
 double InputController::GetScrollDeltaY(){
     double scrollDeltaY=s_ScrollDeltaY;
-    s_ScrollDeltaY=0;
+    s_ScrollDeltaY=0;//we reset the scroll
     return scrollDeltaY;
 };
 

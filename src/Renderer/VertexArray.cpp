@@ -48,6 +48,7 @@ unsigned int VertexArray::GetSizeOfType(GLenum type){
 void VertexArray::AddBuffer(const VertexBuffer &vbo,const VertexBufferLayout &layout){
     Bind();
     vbo.Bind();
+    
     const auto &attributes=layout.GetAttributes();
     unsigned int offset=0;
 

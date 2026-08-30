@@ -1,6 +1,7 @@
 #include "TimeHelper.h"
 #include <GLFW/glfw3.h>
 
+//we initialize static variables
 double TimeHelper::s_CurrentFrame=0;
 double TimeHelper::s_LastFrame=0;
 double TimeHelper::s_DeltaTime=0;

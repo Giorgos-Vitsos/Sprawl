@@ -46,9 +46,9 @@ void VertexBuffer::Unbind() const{
 bool VertexBuffer::SetData(const void *data,unsigned int size){
     bool flag=false;
     Bind();
-    if(size>m_Count){
-        flag=true;
-        if(size>m_Count*2){
+    if(size>m_Count){//if it doesnt fit
+        flag=true;//flag to know if the size was changed
+        if(size>m_Count*2){//we use size or double the buffer
             *this=VertexBuffer(size);
         }else{
             *this=VertexBuffer(m_Count*2);
