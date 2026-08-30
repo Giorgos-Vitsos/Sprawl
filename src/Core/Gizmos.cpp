@@ -27,7 +27,7 @@ void Gizmos::Destroy(){
 void Gizmos::Render(PerspectiveCamera &camera){
     if(s_Vertices.size()==0) return;
     unsigned int totalSize=s_Vertices.size()*sizeof(DebugVertex);
-    if(!s_VBO->SetData(s_Vertices.data(),totalSize)){
+    if(s_VBO->SetData(s_Vertices.data(),totalSize)){
         s_VAO->AddBuffer(*s_VBO,*s_Layout);
     }
     s_VAO->Bind();

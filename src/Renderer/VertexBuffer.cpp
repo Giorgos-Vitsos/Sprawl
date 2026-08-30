@@ -1,6 +1,7 @@
 #include "VertexBuffer.h"
 #include <glad/glad.h>
 #include <stdexcept>
+#include <iostream>
 
 VertexBuffer::VertexBuffer(const void*data, unsigned int size):m_Count(size){
     glGenBuffers(1,&m_ID);
@@ -43,15 +44,14 @@ void VertexBuffer::Unbind() const{
 }
 
 bool VertexBuffer::SetData(const void *data,unsigned int size){
-    bool flag;
+    bool flag=false;
     Bind();
     if(size>m_Count){
+        flag=true;
         if(size>m_Count*2){
             *this=VertexBuffer(size);
-            flag=true;
         }else{
             *this=VertexBuffer(m_Count*2);
-            flag=false;
         }
     }
     glBufferSubData(GL_ARRAY_BUFFER,0,size,data);
