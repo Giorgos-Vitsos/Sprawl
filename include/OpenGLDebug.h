@@ -2,7 +2,9 @@
 #include <glad/glad.h>
 
 /**
- * @brief Responsible for announcing errors and warning in the runtime.
+ * @brief Main debugging class during runtime
+ * 
+ * Responsible for announcing errors and warning in the runtime.
  */
 class OpenGLDebug{
     public:
