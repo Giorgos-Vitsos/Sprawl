@@ -14,6 +14,7 @@ public:
      * @brief Creates a new Vertex Array Object.
      */
     VertexArray();
+
     /**
      * @brief Destroys the VAO.
      */
@@ -36,8 +37,8 @@ public:
      *
      * The source object is left with no owned OpenGL resource.
      */
-
     VertexArray(VertexArray&& other) noexcept;
+
     /**
      * @brief Transfers ownership of the OpenGL vertex array.
      */
@@ -47,6 +48,7 @@ public:
      * @brief Binds the VAO to the active OpenGL context.
      */
     void Bind() const;
+
     /**
      * @brief Unbinds the active VAO.
      */
@@ -65,5 +67,12 @@ public:
 
 private:
     unsigned int m_ID;
+
+    /**
+     * @brief Returns the size in bytes of the specific type.
+     * 
+     * @param type The type of variable.
+     * @returns The size of the variable in bytes.
+     */
     unsigned int GetSizeOfType(GLenum type);
 };

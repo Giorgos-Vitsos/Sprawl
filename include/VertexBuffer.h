@@ -17,6 +17,11 @@ public:
      */
     VertexBuffer(const void *data, unsigned int size);
 
+    /**
+     * @brief Creates a dynamic vertex buffer and uploads data to the GPU.
+     *
+     * @param maxSize The max size of the data.
+     */
     VertexBuffer(unsigned int maxSize);
 
     /**
@@ -58,8 +63,20 @@ public:
      */
     void Unbind() const;
 
+    /**
+     * @brief Returns the size of the data.
+     * 
+     * @returns The size of data.
+     */
     unsigned int GetCount() const { return m_Count; }
 
+    /**
+     * @brief Sets a data to a dynamic VBO.
+     * 
+     * @param data The data to be set.
+     * @param size The size of the data.
+     * @returns True if size was changed.
+     */
     bool SetData(const void *data,unsigned int size);
 
 private:

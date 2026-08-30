@@ -5,7 +5,7 @@
 CamController::CamController(PerspectiveCamera &camera):m_Camera(camera),m_Sensitivity(0.5),m_PanningSpeed(1),m_ZoomSpeed(15){}
 
 void CamController::Update(){
-    glm::vec2 delta=InputController::GetMouseDelta();
+    glm::vec2 delta=InputController::GetMouseDelta();//we get mouse movement
     if(InputController::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_MIDDLE)){
         if(InputController::IsKeyPressed(GLFW_KEY_LEFT_SHIFT)||InputController::IsKeyPressed(GLFW_KEY_RIGHT_SHIFT)){
             Pan(delta);
@@ -28,7 +28,6 @@ void CamController::Pan(glm::vec2 &delta){
     glm::vec3 forward=glm::normalize(m_Camera.GetFocalPoint()-m_Camera.GetPos());
     glm::vec3 right=glm::normalize(glm::cross(forward,WORLD_UP));
     glm::vec3 localUp=glm::normalize(glm::cross(right,forward));
-    
     glm::vec3 x=delta.x*right*m_PanningSpeed *(float)TimeHelper::GetDeltaTime();
     glm::vec3 y=delta.y*localUp*m_PanningSpeed*(float)TimeHelper::GetDeltaTime();
     m_Camera.SetFocalPoint(glm::vec3(m_Camera.GetFocalPoint()-x+y));

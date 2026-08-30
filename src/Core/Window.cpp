@@ -4,13 +4,13 @@
 #include "InputController.h"
 #include "OpenGLDebug.h"
 
-
+//we initialize static variables
 int Window::s_WindowCounter=0;
 
 Window::Window(int width,int height,const std::string& title):m_Width(width),m_Height(height),m_Title(title),m_Window(nullptr){
     glfwSetErrorCallback(ErrorCallback);
 
-    if(s_WindowCounter==0){
+    if(s_WindowCounter==0){//only the first time we initialize glfw
 
         if (!glfwInit()){
             throw std::runtime_error("Failed to initialize GLFW\n");
@@ -30,7 +30,7 @@ Window::Window(int width,int height,const std::string& title):m_Width(width),m_H
 
     glfwMakeContextCurrent(m_Window);
 
-    if(s_WindowCounter==0){
+    if(s_WindowCounter==0){//only first time we initialize glad
 
         if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))){
             glfwTerminate();
@@ -39,6 +39,7 @@ Window::Window(int width,int height,const std::string& title):m_Width(width),m_H
         }
         OpenGLDebug::Init();
     }
+
     glfwSetWindowUserPointer(m_Window,this);
 
     ChangeVSync(true);
@@ -53,28 +54,25 @@ Window::Window(int width,int height,const std::string& title):m_Width(width),m_H
 
 Window::~Window()
 {
-    if (m_Window){
+    if (m_Window){//if we have a window
         glfwDestroyWindow(m_Window);
         s_WindowCounter--;
     }
-    if (s_WindowCounter == 0){
+    if (s_WindowCounter == 0){//if no windows left we close everything
         glfwTerminate();
     }
 }
 
 bool Window::ShouldClose() const{
-
     return glfwWindowShouldClose(m_Window);
 }
 
 void Window::SwapBuffersAndPoll(){
-
     glfwSwapBuffers(m_Window);
     glfwPollEvents();
 }
 
 void Window::ProcessInput(){
-
     if (InputController::IsKeyPressed(GLFW_KEY_ESCAPE))
     {
         glfwSetWindowShouldClose(m_Window, true);
@@ -82,7 +80,7 @@ void Window::ProcessInput(){
 }
 
 void Window::FrameBufferSizeCallBack(GLFWwindow* window, int width, int height){
-    Window* currWindow=(Window*)glfwGetWindowUserPointer(window);
+    Window* currWindow=(Window*)glfwGetWindowUserPointer(window);//we get current context
     currWindow->m_Height=height;
     currWindow->m_Width=width;
     glViewport(0, 0, width, height);
@@ -97,9 +95,9 @@ void Window::ChangeVSync(bool VSyncIsOn){
     if(m_Window==nullptr){
         throw std::runtime_error("Cant change VSync if window is not initialized\n");
     }
-    if(VSyncIsOn){
+    if(VSyncIsOn){//on
         glfwSwapInterval(1);
-    }else{
+    }else{//off
          glfwSwapInterval(0);
     }
 };

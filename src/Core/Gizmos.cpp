@@ -1,6 +1,6 @@
 #include "Gizmos.h"
 
-
+//initializes static variables
 Shader* Gizmos::s_Shader=nullptr;
 VertexArray* Gizmos::s_VAO=nullptr;
 VertexBuffer* Gizmos::s_VBO=nullptr;
@@ -9,6 +9,7 @@ std::vector<DebugVertex> Gizmos::s_Vertices;
 
 void Gizmos::Init(){
     s_Shader=new Shader("assets/shaders/Gizmos.vert", "assets/shaders/Gizmos.frag");
+
     s_VAO=new VertexArray();
     s_Layout=new VertexBufferLayout();
     s_Layout->Push<float>(3);
@@ -18,6 +19,7 @@ void Gizmos::Init(){
     s_Vertices.reserve(1000);
 }
 
+//delete the alocated pointers
 void Gizmos::Destroy(){
     delete s_Shader;
     delete s_VAO;
@@ -25,11 +27,13 @@ void Gizmos::Destroy(){
 }
 
 void Gizmos::Render(PerspectiveCamera &camera){
-    if(s_Vertices.size()==0) return;
-    unsigned int totalSize=s_Vertices.size()*sizeof(DebugVertex);
-    if(!s_VBO->SetData(s_Vertices.data(),totalSize)){
-        s_VAO->AddBuffer(*s_VBO,*s_Layout);
+    if(s_Vertices.size()==0) return;//if no points to render we return
+
+    unsigned int totalSize=s_Vertices.size()*sizeof(DebugVertex);//the total size we will need to dynamicaly allocate
+    if(s_VBO->SetData(s_Vertices.data(),totalSize)){//if we expanded the VBO
+        s_VAO->AddBuffer(*s_VBO,*s_Layout);//we bind the layout again
     }
+
     s_VAO->Bind();
     s_Shader->Bind();
     s_Shader->SetUniformMat4f("u_MVP",camera.GetViewProjMatrix());

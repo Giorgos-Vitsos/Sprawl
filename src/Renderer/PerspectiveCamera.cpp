@@ -9,11 +9,9 @@ PerspectiveCamera::PerspectiveCamera(float fov, float aspectRatio, float nearCli
 }
 
 void PerspectiveCamera::RecalcViewMatrix(){
-
     float x=m_FocalPoint.x+m_Distance*cos(m_Pitch)*sin(m_Yaw);
     float y=m_FocalPoint.y+m_Distance*sin(m_Pitch);
     float z=m_FocalPoint.z+m_Distance*cos(m_Pitch)*cos(m_Yaw);
-
     m_Pos=glm::vec3(x,y,z);
     m_ViewMatrix=glm::lookAt(glm::vec3(m_Pos), glm::vec3(m_FocalPoint),WORLD_UP);
     m_ViewProjMatrix=m_ProjMatrix*m_ViewMatrix;
@@ -25,12 +23,12 @@ void PerspectiveCamera::SetFocalPoint(const glm::vec3& focalPoint){
 };
 
 void PerspectiveCamera::SetDis(float dis){
-    m_Distance=std::clamp(dis,0.1f,INFINITY);
+    m_Distance=std::clamp(dis,0.1f,INFINITY);//we clamp so camera doesnt get inside the object
     RecalcViewMatrix();
 };
 
 void PerspectiveCamera::SetPitchYaw(float pitch,float yaw){
-    m_Pitch=std::clamp(pitch,glm::radians(-89.9f),glm::radians(89.9f));
+    m_Pitch=std::clamp(pitch,glm::radians(-89.9f),glm::radians(89.9f));//we clamp so camera doesnt snap on weird angles
     m_Yaw=yaw;
     RecalcViewMatrix();
 };
