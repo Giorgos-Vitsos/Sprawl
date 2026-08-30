@@ -25,6 +25,7 @@ public:
      * @brief Initializes an empty layout with a starting stride of 0.
      */
     VertexBufferLayout() : m_Stride(0) {}
+
     /**
      * @brief Pushes a new attribute into the layout.
      *
@@ -38,12 +39,14 @@ public:
     {
         static_assert(sizeof(T) == 0, "Unsupported type");
     }
+
     /**
      * @brief Retrieves the list of defined vertex attributes.
      *
      * @return A constant reference to the vector of VertexBufferElements.
      */
     const std::vector<VertexBufferAttribute> &GetAttributes() const { return m_Attributes; }
+    
     /**
      * @brief Retrieves the total size of a single vertex in bytes.
      *

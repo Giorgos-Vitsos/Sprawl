@@ -9,6 +9,11 @@
 class PrimitiveCreator{
     public:
         /**
+         * @brief Constructor is disable because class is static.
+         */
+        PrimitiveCreator()=delete;
+
+        /**
          * @brief Creates a plane.
          * 
          * @returns The mesh of a plane.
