@@ -101,7 +101,7 @@ private:
      * @param width The new width.
      * @param height The new height.
      */
-    static void FrameBufferSizeCallBack(GLFWwindow *window, int width, int height);
+    static void FrameBufferSizeCallback(GLFWwindow *window, int width, int height);
 
     /**
      * @brief GLFW callback invoked when the framebuffer is resized.
