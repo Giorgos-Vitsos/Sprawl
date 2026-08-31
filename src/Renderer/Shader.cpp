@@ -1,5 +1,6 @@
 #include "Shader.h"
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -31,7 +32,7 @@ unsigned int Shader::CompileShader(unsigned int type,const std::string& sourceCo
 
     int result;
     glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-    if (result == GL_FALSE) {
+    if (result == GL_FALSE) {//if it failed we create a error message
         int length;
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
         
@@ -43,7 +44,6 @@ unsigned int Shader::CompileShader(unsigned int type,const std::string& sourceCo
         std::string shaderType = (type == GL_VERTEX_SHADER ? "Vertex" : "Fragment");
         throw std::runtime_error("Failed to compile " + shaderType + " shader!\n" + message.data());
     }
-
     return id;
 }
 
@@ -58,7 +58,7 @@ unsigned int Shader::CreateShaderProgram(const std::string &vertexCode,const std
 
     int result;
     glGetProgramiv(program, GL_LINK_STATUS, &result);
-    if (result == GL_FALSE) {//if it failed we build report msg
+    if (result == GL_FALSE) {//if it failed we build report message
         int length;
         glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
         std::vector<char> message(length);
@@ -86,3 +86,58 @@ std::string Shader::ReadFile(const std::string &filePath){
     buffer<<stream.rdbuf();
     return buffer.str();
 }
+
+int Shader::GetUniformLoc(const std::string &name){
+    auto locationInMap=m_UniformLocMap.find(name);
+    if(locationInMap!=m_UniformLocMap.end()){//if it was found
+        return locationInMap->second;
+    };
+    int location=glGetUniformLocation(m_ID, name.c_str());//we add it to the map and return it
+    m_UniformLocMap[name]=location;
+    return location;
+}
+
+void Shader::SetUniformMat4f(const std::string &name,const glm::mat4 &matrix){
+    Bind();
+    int location=GetUniformLoc(name);
+    if(location==-1){
+        std::cout<<"Warning: uniform "<<name<<"couldnt be found"<<std::endl;
+    }
+    glUniformMatrix4fv(location,1,GL_FALSE,glm::value_ptr(matrix));
+}
+
+void Shader::SetUniform1i(const std::string& name,const int value){
+    Bind();
+    int location=GetUniformLoc(name);
+    if(location==-1){
+        std::cout<<"Warning: uniform "<<name<<"couldnt be found"<<std::endl;
+    }
+    glUniform1i(location,value);
+};
+
+void Shader::SetUniform1f(const std::string& name,const float value){
+    Bind();
+    int location=GetUniformLoc(name);
+    if(location==-1){
+        std::cout<<"Warning: uniform "<<name<<"couldnt be found"<<std::endl;
+    }
+    glUniform1f(location,value);
+};
+
+void Shader::SetUniform3f(const std::string& name,const glm::vec3 &value){
+    Bind();
+    int location=GetUniformLoc(name);
+    if(location==-1){
+        std::cout<<"Warning: uniform "<<name<<"couldnt be found"<<std::endl;
+    }
+    glUniform3f(location,value.x,value.y,value.z);
+};
+
+void Shader::SetUniform4f(const std::string& name,const glm::vec4 &value){
+    Bind();
+    int location=GetUniformLoc(name);
+    if(location==-1){
+        std::cout<<"Warning: uniform "<<name<<"couldnt be found"<<std::endl;
+    }
+    glUniform4f(location,value.x,value.y,value.z,value.w);
+};

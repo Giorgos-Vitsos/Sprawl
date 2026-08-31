@@ -11,6 +11,23 @@ IndexBuffer::~IndexBuffer(){
     glDeleteBuffers(1,&m_ID);
 }
 
+IndexBuffer::IndexBuffer(IndexBuffer&& other) noexcept : m_ID(other.m_ID) 
+{
+    other.m_ID = 0;
+    other.m_Count=0;
+}
+
+IndexBuffer& IndexBuffer::operator=(IndexBuffer&& other) noexcept {
+    if (this != &other) { 
+        glDeleteBuffers(1, &m_ID); 
+        m_ID = other.m_ID;   
+        m_Count=other.m_Count;      
+        other.m_ID = 0;  
+        other.m_Count=0;         
+    }
+    return *this;
+}
+
 void IndexBuffer::Bind() const{
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,m_ID);
 }

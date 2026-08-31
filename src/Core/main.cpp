@@ -1,57 +1,53 @@
 #include "Window.h"
-#include "VertexBuffer.h"
-#include "VertexArray.h"
-#include "Shader.h"
-#include "IndexBuffer.h"
-#include "VertexBufferLayout.h"
+#include "PrimitiveCreator.h"
+#include "CamController.h"
+#include "TimeHelper.h"
+#include "Renderer.h"
+#include "Gizmos.h"
 #include <iostream>
 
 int main() {
     try {
-        Window window(800, 600, "Graphics Engine - Giorgos Vitsos");
-
-        float vertices[] = {
-             0.5f,  0.5f, 0.0f, //0
-             0.5f, -0.5f, 0.0f, //1
-            -0.5f, -0.5f, 0.0f, //2
-            -0.5f,  0.5f, 0.0f  //3
-        };
-
-        unsigned int indices[] = {
-            0, 1, 3, 
-            1, 2, 3 
-        };
-
-
-        VertexBuffer vbo(vertices, sizeof(vertices));
-        IndexBuffer ibo(indices,6);
-
-        VertexBufferLayout layout;
-        layout.Push<float>(3);
-
-        VertexArray vao;
-        vao.AddBuffer(vbo,layout);
+        Window window(800, 600, "Sprawl Engine");
         
-        ibo.Bind();
+        PerspectiveCamera camera(45.0f,800.0f/600.0f,0.1f,100.0f);
+        window.SetResizeCallback([&camera](float aspectRatio){
+            camera.SetAspectRatio(aspectRatio);
+        });
+        CamController controller(camera);
 
         Shader shader("assets/shaders/Basic.vert", "assets/shaders/Basic.frag");
 
+        Mesh triangle=PrimitiveCreator::CreateTriangle();
+        Transform triangleTRS;
+        
+        Mesh cube=PrimitiveCreator::CreateCube();
+        Transform cubeTRS;
+
+        Renderer renderer;
+        Gizmos::Init();
+
         while (!window.ShouldClose()) {
-            window.ProcessInput();
 
-            glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            shader.Bind();
-            vao.Bind();
+            TimeHelper::Tick();
+            Gizmos::DrawGrid();
             
-            glDrawElements(GL_TRIANGLES, ibo.GetCount(), GL_UNSIGNED_INT, nullptr);
+            renderer.Clear();
+            window.ProcessInput();
+            controller.Update();
+
+            renderer.Draw(cube,shader,cubeTRS,camera);
+            triangleTRS.SetPos(glm::vec3(0,0,-5));
+            triangleTRS.SetScale(glm::vec3(5,5,5));
+            renderer.Draw(triangle,shader,triangleTRS,camera);
+            
+            window.SetStats(renderer.GetStats());
+            Gizmos::Render(camera);
             window.SwapBuffersAndPoll();
         }
-    } 
-
-    catch (const std::exception& e) {
-        std::cerr << "Fatal Error: " << e.what() << "\n";
+        Gizmos::Destroy();
+    }catch (const std::exception& e) {
+        std::cerr << "\n\033[31mFatal Error: " << e.what() << "\033[0m\n";
         return -1;
     }
 
