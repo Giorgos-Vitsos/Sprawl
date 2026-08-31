@@ -9,16 +9,20 @@
 int main() {
     try {
         Window window(800, 600, "Sprawl Engine");
+        
+        PerspectiveCamera camera(45.0f,800.0f/600.0f,0.1f,100.0f);
+        window.SetResizeCallback([&camera](float aspectRatio){
+            camera.SetAspectRatio(aspectRatio);
+        });
+        CamController controller(camera);
+
+        Shader shader("assets/shaders/Basic.vert", "assets/shaders/Basic.frag");
 
         Mesh triangle=PrimitiveCreator::CreateTriangle();
         Transform triangleTRS;
         
         Mesh cube=PrimitiveCreator::CreateCube();
         Transform cubeTRS;
-
-        Shader shader("assets/shaders/Basic.vert", "assets/shaders/Basic.frag");
-        PerspectiveCamera camera(45.0f,800.0f/600.0f,0.1f,100.0f);
-        CamController controller(camera);
 
         Renderer renderer;
         Gizmos::Init();

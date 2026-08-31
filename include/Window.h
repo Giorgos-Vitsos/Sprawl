@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <string>
 #include "Renderer.h"
+#include <functional>
 
 /**
  * @brief Manages the application's window and OpenGL context.
@@ -86,6 +87,13 @@ public:
      */
     void ChangeVSync(bool VSyncIsOn);
 
+    /**
+     * @brief Sets a function to be used as resize callback
+     * 
+     * @param callback The function to be set.
+     */
+    void SetResizeCallback(const std::function<void(float)>& callback);
+
 private:
     /**
      * @brief GLFW callback invoked when the framebuffer is resized.
@@ -93,7 +101,7 @@ private:
      * @param width The new width.
      * @param height The new height.
      */
-    static void FrameBufferSizeCallBack(GLFWwindow *window, int width, int height);
+    static void FrameBufferSizeCallback(GLFWwindow *window, int width, int height);
 
     /**
      * @brief GLFW callback invoked when the framebuffer is resized.
@@ -108,4 +116,5 @@ private:
     int m_Height;
     std::string m_Title;
     static int s_WindowCounter;
+    std::function<void(float)> m_ResizeCallback;
 };

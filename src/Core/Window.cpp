@@ -44,7 +44,7 @@ Window::Window(int width,int height,const std::string& title):m_Width(width),m_H
 
     ChangeVSync(true);
 
-    glfwSetFramebufferSizeCallback(m_Window, FrameBufferSizeCallBack);
+    glfwSetFramebufferSizeCallback(m_Window, FrameBufferSizeCallback);
     glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
     glViewport(0, 0, m_Width, m_Height);
     
@@ -79,11 +79,16 @@ void Window::ProcessInput(){
     }
 }
 
-void Window::FrameBufferSizeCallBack(GLFWwindow* window, int width, int height){
+void Window::FrameBufferSizeCallback(GLFWwindow* window, int width, int height){
     Window* currWindow=(Window*)glfwGetWindowUserPointer(window);//we get current context
     currWindow->m_Height=height;
     currWindow->m_Width=width;
     glViewport(0, 0, width, height);
+
+    float aspectRatio=(float)width/(float)height;
+    if(currWindow->m_ResizeCallback){
+        currWindow->m_ResizeCallback(aspectRatio);
+    }
 }
 
 void Window::SetStats(RendererStats statStruct){
@@ -106,3 +111,7 @@ void Window::ErrorCallback(int id,const char* desc){
     std::string error="("+ std::to_string(id) +") "+desc;
     throw std::runtime_error(error);
 }
+
+void Window::SetResizeCallback(const std::function<void(float)>& callback){
+    m_ResizeCallback=callback;
+};
