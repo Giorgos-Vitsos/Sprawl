@@ -79,6 +79,13 @@ class PerspectiveCamera{
          * @returns The distance.
          */
         const float GetDis() const{return m_Distance;};
+
+        /**
+         * @brief Dynamicaly changes cameras aspect ratio and updates matrixes.
+         * 
+         * @param aspectRatio The width to height.
+         */
+        void SetAspectRatio(float aspectRatio);
     private:
 
         /**
@@ -93,4 +100,8 @@ class PerspectiveCamera{
         float m_Distance;
         float m_Pitch;
         float m_Yaw;
+        float m_FOV;
+        float m_AspectRatio;
+        float m_NearClip;
+        float m_FarClip;
 };

@@ -84,6 +84,11 @@ void Window::FrameBufferSizeCallBack(GLFWwindow* window, int width, int height){
     currWindow->m_Height=height;
     currWindow->m_Width=width;
     glViewport(0, 0, width, height);
+
+    float aspectRatio=(float)width/(float)height;
+    if(currWindow->m_ResizeCallback){
+        currWindow->m_ResizeCallback(aspectRatio);
+    }
 }
 
 void Window::SetStats(RendererStats statStruct){
@@ -106,3 +111,7 @@ void Window::ErrorCallback(int id,const char* desc){
     std::string error="("+ std::to_string(id) +") "+desc;
     throw std::runtime_error(error);
 }
+
+void Window::SetResizeCallback(const std::function<void(float)>& callback){
+    m_ResizeCallback=callback;
+};

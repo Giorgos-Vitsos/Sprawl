@@ -3,8 +3,8 @@
 #include <glm/gtc/quaternion.hpp>
 #include <algorithm>
 
-PerspectiveCamera::PerspectiveCamera(float fov, float aspectRatio, float nearClip, float farClip):m_ViewMatrix(1.0f),m_Pos(0,0,0),m_Pitch(0),m_Yaw(0),m_Distance(8.0f),m_FocalPoint(0){
-    m_ProjMatrix=glm::perspective(glm::radians(fov),aspectRatio,nearClip,farClip);
+PerspectiveCamera::PerspectiveCamera(float fov, float aspectRatio, float nearClip, float farClip):m_FOV(fov),m_AspectRatio(aspectRatio),m_NearClip(nearClip),m_FarClip(farClip),m_ViewMatrix(1.0f),m_Pos(0,0,0),m_Pitch(0),m_Yaw(0),m_Distance(8.0f),m_FocalPoint(0){
+    m_ProjMatrix=glm::perspective(glm::radians(m_FOV),m_AspectRatio,m_NearClip,m_FarClip);
     RecalcViewMatrix();
 }
 
@@ -36,4 +36,9 @@ void PerspectiveCamera::SetPitchYaw(float pitch,float yaw){
 const glm::mat4 &PerspectiveCamera::GetViewProjMatrix() const{ return m_ViewProjMatrix;};
 
 const glm::vec2 PerspectiveCamera::GetPichYaw() const {return glm::vec2(m_Pitch,m_Yaw);}
-    
+
+void PerspectiveCamera::SetAspectRatio(float aspectRatio){
+    m_AspectRatio=aspectRatio;
+    m_ProjMatrix=glm::perspective(glm::radians(m_FOV),m_AspectRatio,m_NearClip,m_FarClip);
+    m_ViewProjMatrix=m_ProjMatrix*m_ViewMatrix;
+};
